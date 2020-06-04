@@ -1,5 +1,5 @@
 create table golden_globe(
-    year smallint NOT NULL,
+    year char(5) NOT NULL,
     nomination varchar(110) NOT NULL,
     film varchar(110) NOT NULL,
     win varchar(10) NOT NULL,
