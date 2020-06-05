@@ -13,5 +13,5 @@ enclosed by '"'
 lines terminated by '\r\n'
 ignore 1 lines;
 
-
+delete from golden_globe where film='';
 

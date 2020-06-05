@@ -5,17 +5,18 @@ create table director(
 );
 
 load data local infile './director1.csv'
-into table golden_globe
+into table director
 fields terminated by ','
 enclosed by '"'
 lines terminated by '\r\n'
 ignore 1 lines;
 
 load data local infile './director2.csv'
-into table golden_globe
+into table director
 fields terminated by ','
 enclosed by '"'
 lines terminated by '\r\n'
 ignore 1 lines;
+delete from director where director='';
 
 
