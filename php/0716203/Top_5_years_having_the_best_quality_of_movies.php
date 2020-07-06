@@ -1,5 +1,5 @@
 <?php
-$mysqli = new mysqli('localhost', 'root', 'password', 'project');
+$mysqli = new mysqli('localhost', 'root', 'office209', 'project');
 
 // Oh no! A connect_errno exists so the connection attempt failed!
 if ($mysqli->connect_errno) {
@@ -14,13 +14,14 @@ if ($mysqli->connect_errno) {
 
 // Perform an SQL query
 
-$sql="SELECT temp.year, temp.cnt
-from(SELECT m.year as year, count(*) as cnt
-FROM all_gender al, movie m
-where al.id=m.id and al.rating>8
-GROUP BY m.year 
-ORDER BY cnt DESC LIMIT 5) as temp";
-
+$sql="SELECT temp.year, temp.rating
+FROM (
+SELECT movie.year, AVG(all_gender.rating) as rating
+FROM movie, all_gender
+WHERE movie.id = all_gender.id
+GROUP BY movie.year
+ORDER BY AVG(all_gender.rating) DESC
+LIMIT 5) as temp";
 
 
 
@@ -44,11 +45,15 @@ if ($result->num_rows === 0) {
     exit;
 }
 
-echo '<div style="font-size:1.25em;color:red">most movie rating>=8  top5 year </div>';
+echo '<div style="font-size:1.25em;color:red">Top 5 years having the best quality of movies</div>';
 while ($actor = $result->fetch_assoc()) {    
+  //echo "<pre>";
+  //echo "{$actor['id']} &nbsp {$actor['rating']}\n";
+  //echo "</pre>";
+  echo "<pre>";
  
-  echo "<pre>"; 
-  echo "{$actor['year']}&nbsp{$actor['cnt']}";
+  
+  echo "{$actor['year']}&nbsp{$actor['rating']}";
   echo "</pre>";
 }
 
