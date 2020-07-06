@@ -1,4 +1,4 @@
-/*duration with highest average rating*/
+/*top 3 duration average rating*/
 SELECT table1.duration from
 (SELECT '<= 90' as duration,avg(temp.rating) as average_rating
 from
@@ -17,5 +17,5 @@ from
 (SELECT md.duration,ag.rating 
 from movie_detail md,all_gender ag
 where md.id=ag.id and duration>150)as temp
-order by average_rating desc)as table1 limit 1;
+order by average_rating desc)as table1 limit 3;
 

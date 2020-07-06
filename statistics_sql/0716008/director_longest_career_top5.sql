@@ -1,4 +1,4 @@
-/*longest_career_top3*/
+/*longest_career_top5*/
 
 SELECT table1.director,table1.career_years from 
 (SELECT chart1.director,(chart1.year-chart2.year) as career_years
@@ -16,4 +16,4 @@ group by director
 order by director)as chart2
 where chart1.director=chart2.director)as table1
 where table1.career_years<50
-order by career_years desc limit 3;
+order by career_years desc limit 5;
