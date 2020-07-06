@@ -1,5 +1,5 @@
 #近10年推薦電影(評分高)
-#Top movies in 10 years
+#Top_movies_in_10_years
 
 SELECT movie.title, all_gender.rating
 FROM movie, all_gender

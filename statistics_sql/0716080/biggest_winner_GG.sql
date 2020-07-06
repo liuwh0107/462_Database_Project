@@ -1,5 +1,5 @@
 #每年得GG獎總數量最多(最大贏家電影)
-#The biggest Golden Globe winner of each year
+#The_biggest_Golden_Globe_winner_of_each_year
 
 SELECT temp.year, tmep.film, temp.wins
 FROM (

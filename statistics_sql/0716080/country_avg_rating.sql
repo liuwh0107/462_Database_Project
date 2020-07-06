@@ -1,5 +1,5 @@
 #哪個國家出產的電影最優質
-#The country producing best movie
+#The_country_producing_best_movie
 
 SELECT movie_detail.country, AVG(all_gender.rating)
 FROM movie_detail, all_gender

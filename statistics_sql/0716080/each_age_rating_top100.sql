@@ -1,5 +1,5 @@
 #各年齡層TOP 100
-#Top 100 movies of age from 0 to 18
+#Top_100_movies_of_age_from_0_to_18
 
 SELECT movie.title, all_gender.avg_0_18
 FROM movie, all_gender

@@ -1,5 +1,5 @@
 #哪5年電影最優質(所有當年電影平均分數)
-#Top 5 years having the best quality of movies
+#Top_5_years_having_the_best_quality_of_movies
 
 SELECT movie.year, AVG(all_gender.rating)
 FROM movie, all_gender
