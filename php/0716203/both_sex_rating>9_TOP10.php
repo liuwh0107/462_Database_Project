@@ -14,16 +14,14 @@ if ($mysqli->connect_errno) {
 
 // Perform an SQL query
 
-$sql="SELECT temp.year, temp.film, temp.wins
-FROM (
-SELECT info.year, ANY_VALUE(info.film) as film, ANY_VALUE(info.num_of_wins) as wins
-FROM(
-    SELECT oscar.year, oscar.film, COUNT(*) as num_of_wins
-    FROM  oscar
-    WHERE win = 'TRUE'
-    GROUP BY oscar.year, oscar.film
-    ORDER BY  num_of_wins DESC) as info
-GROUP BY info.year) as temp";
+$sql="SELECT mo.title,ids.rating
+FROM movie mo,
+(SELECT f.id,(f.rating+m.rating)/2 as rating
+FROM female f, male m
+where f.id=m.id and f.rating>9 and m.rating>9
+ORDER BY f.rating+m.rating DESC limit 10)as ids
+where mo.id=ids.id";
+
 
 
 
@@ -47,15 +45,11 @@ if ($result->num_rows === 0) {
     exit;
 }
 
-echo '<div style="font-size:1.25em;color:red">Winner </div>';
+echo '<div style="font-size:1.25em;color:red">Both  sex  rating>9  TOP10 year </div>';
 while ($actor = $result->fetch_assoc()) {    
-  //echo "<pre>";
-  //echo "{$actor['id']} &nbsp {$actor['rating']}\n";
-  //echo "</pre>";
-  echo "<pre>";
  
-  
-  echo "{$actor['year']}&nbsp{$actor['film']}&nbsp{$actor['wins']}";
+  echo "<pre>"; 
+  echo "{$actor['title']}&nbsp{$actor['rating']}";
   echo "</pre>";
 }
 

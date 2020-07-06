@@ -14,12 +14,18 @@ if ($mysqli->connect_errno) {
 
 // Perform an SQL query
 
-$sql="SELECT temp.director, temp.rate
-from(SELECT  d.director as director,avg(g.rating) as rate
-FROM director d, all_gender g
-where d.id=g.id
-GROUP BY d.director
-ORDER BY  avg(g.rating) DESC limit 10) as temp";
+$sql="SELECT temp.genre, temp.rate
+from(SELECT distinct c.genre as genre , sumr.s/c.cnt as rate
+FROM female al,
+(SELECT G.genre ,count(*)as cnt
+FROM genre G
+GROUP by G.genre)as c,
+(SELECT sum(al.rating) as s,G.genre
+FROM genre  G, female al
+WHERE G.id=al.id
+GROUP by G.genre)as sumr
+where c.genre=sumr.genre
+ORDER by  sumr.s/c.cnt DESC limit 10) as temp";
 
 
 
@@ -44,21 +50,27 @@ if ($result->num_rows === 0) {
     exit;
 }
 
-echo '<div style="font-size:1.25em;color:red">The best director TOP10 </div>';
+echo '<div style="font-size:1.25em;color:red">Female Favorite Genre TOP10</div>';
 while ($actor = $result->fetch_assoc()) {    
  
   echo "<pre>"; 
-  echo "{$actor['director']}&nbsp{$actor['rate']}";
+  echo "{$actor['genre']}&nbsp{$actor['rate']}";
   echo "</pre>";
 }
 
 
-$sql="SELECT temp.director, temp.rate
-from(SELECT  d.director as director,avg(g.rating) as rate
-FROM director d, all_gender g
-where d.id=g.id
-GROUP BY d.director
-ORDER BY  avg(g.rating) ASC limit 10) as temp";
+$sql="SELECT temp.genre, temp.rate
+from(SELECT distinct c.genre as genre, sumr.s/c.cnt as rate
+FROM male al,
+(SELECT G.genre ,count(*)as cnt
+FROM genre G
+GROUP by G.genre)as c,
+(SELECT sum(al.rating) as s,G.genre
+FROM genre  G, male al
+WHERE G.id=al.id
+GROUP by G.genre)as sumr
+where c.genre=sumr.genre
+ORDER by  sumr.s/c.cnt DESC limit 10) as temp";
 
 
 
@@ -83,14 +95,13 @@ if ($result->num_rows === 0) {
     exit;
 }
 
-echo '<div style="font-size:1.25em;color:red">The worst director TOP10 </div>';
+echo '<div style="font-size:1.25em;color:red">Male Favorite Genre TOP10</div>';
 while ($actor = $result->fetch_assoc()) {    
  
   echo "<pre>"; 
-  echo "{$actor['director']}&nbsp{$actor['rate']}";
+  echo "{$actor['genre']}&nbsp{$actor['rate']}";
   echo "</pre>";
 }
-
 
 
 $result->free();

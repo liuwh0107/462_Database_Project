@@ -14,16 +14,20 @@ if ($mysqli->connect_errno) {
 
 // Perform an SQL query
 
-$sql="SELECT temp.year, temp.film, temp.wins
-FROM (
-SELECT info.year, ANY_VALUE(info.film) as film, ANY_VALUE(info.num_of_wins) as wins
-FROM(
-    SELECT oscar.year, oscar.film, COUNT(*) as num_of_wins
-    FROM  oscar
-    WHERE win = 'TRUE'
-    GROUP BY oscar.year, oscar.film
-    ORDER BY  num_of_wins DESC) as info
-GROUP BY info.year) as temp";
+$sql="SELECT temp.director, temp.cnt
+from(SELECT os.director as director, os.cnt+gl.cnt as cnt
+FROM
+(SELECT DISTINCT d.director,count(*)as cnt
+from movie m, oscar o,director d
+where m.title=o.film and o.win='TRUE' and d.id=m.id
+GROUP BY d.director)as os,
+(SELECT DISTINCT d.director,count(*)as cnt
+from movie m, oscar o,director d
+where m.title=o.film and o.win='TRUE' and d.id=m.id
+GROUP BY d.director)as gl
+WHERE os.director=gl.director
+ORDER BY os.cnt+gl.cnt DESC  LIMIT 1) as temp";
+
 
 
 
@@ -47,15 +51,11 @@ if ($result->num_rows === 0) {
     exit;
 }
 
-echo '<div style="font-size:1.25em;color:red">Winner </div>';
+echo '<div style="font-size:1.25em;color:red">Most win director</div>';
 while ($actor = $result->fetch_assoc()) {    
-  //echo "<pre>";
-  //echo "{$actor['id']} &nbsp {$actor['rating']}\n";
-  //echo "</pre>";
-  echo "<pre>";
  
-  
-  echo "{$actor['year']}&nbsp{$actor['film']}&nbsp{$actor['wins']}";
+  echo "<pre>"; 
+  echo "{$actor['director']}&nbsp{$actor['cnt']}";
   echo "</pre>";
 }
 

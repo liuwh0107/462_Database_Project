@@ -14,16 +14,12 @@ if ($mysqli->connect_errno) {
 
 // Perform an SQL query
 
-$sql="SELECT temp.year, temp.film, temp.wins
-FROM (
-SELECT info.year, ANY_VALUE(info.film) as film, ANY_VALUE(info.num_of_wins) as wins
-FROM(
-    SELECT oscar.year, oscar.film, COUNT(*) as num_of_wins
-    FROM  oscar
-    WHERE win = 'TRUE'
-    GROUP BY oscar.year, oscar.film
-    ORDER BY  num_of_wins DESC) as info
-GROUP BY info.year) as temp";
+$sql="SELECT temp.genre, temp.cnt
+from(SELECT g.genre as genre , count(*) as cnt
+FROM genre g
+GROUP BY g.genre
+ORDER BY count(*) DESC  LIMIT 3) as temp";
+
 
 
 
@@ -47,15 +43,11 @@ if ($result->num_rows === 0) {
     exit;
 }
 
-echo '<div style="font-size:1.25em;color:red">Winner </div>';
+echo '<div style="font-size:1.25em;color:red">Most Prolific Genre </div>';
 while ($actor = $result->fetch_assoc()) {    
-  //echo "<pre>";
-  //echo "{$actor['id']} &nbsp {$actor['rating']}\n";
-  //echo "</pre>";
-  echo "<pre>";
  
-  
-  echo "{$actor['year']}&nbsp{$actor['film']}&nbsp{$actor['wins']}";
+  echo "<pre>"; 
+  echo "{$actor['genre']}&nbsp{$actor['cnt']}";
   echo "</pre>";
 }
 
