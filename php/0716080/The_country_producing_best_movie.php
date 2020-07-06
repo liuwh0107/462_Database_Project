@@ -1,5 +1,5 @@
 <?php
-$mysqli = new mysqli('localhost', 'root', 'password', 'project');
+$mysqli = new mysqli('localhost', 'root', 'office209', 'project');
 
 // Oh no! A connect_errno exists so the connection attempt failed!
 if ($mysqli->connect_errno) {
