@@ -5,7 +5,7 @@ SELECT info.year, ANY_VALUE(info.film) as film, ANY_VALUE(info.num_of_wins) as w
 FROM(
     SELECT golden_globe.year, golden_globe.film, COUNT(*) as num_of_wins
     FROM  golden_globe
-    WHERE win = "TRUE"
+    WHERE win = 'TRUE'
     GROUP BY golden_globe.year, golden_globe.film
     ORDER BY  num_of_wins DESC) as info
 GROUP BY info.year ) as temp;
