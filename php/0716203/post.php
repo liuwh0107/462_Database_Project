@@ -22,7 +22,7 @@ country :
     <option value="Bermuda">Bermuda</option>
     <option value="Bhutan">Bhutan</option>
     <option value="Bolivia">Bolivia</option>
-    <option value="Bosnia and Herzegovi">Bosnia and Herzegovi</option>
+    <option value="Bosnia and Herzegovina">Bosnia and Herzegovina</option>
     <option value="Brazil">Brazil</option>
     <option value="Brunei">Brunei</option>
     <option value="Bulgaria">Bulgaria</option>
@@ -43,10 +43,11 @@ country :
     <option value="Denmark">Denmark</option>
     <option value="Dominican Republic">Dominican Republic</option>
     <option value="East Germany">East Germany</option>
+    <option value="Ecuador">Ecuador</option>
     <option value="Egypt">Egypt</option>
     <option value="Estonia">Estonia</option>
     <option value="Ethiopia">Ethiopia</option>
-    <option value="Federal Republic of ">Federal Republic of </option>
+    <option value="Federal Republic of Yugoslavia">Federal Republic of Yugoslavia </option>
     <option value="Finland">Finland</option>
     <option value="France">France</option>
     <option value="Georgia">Georgia</option>
@@ -118,14 +119,14 @@ country :
     <option value="Portugal">Portugal</option>
     <option value="Puerto Rico">Puerto Rico</option>
     <option value="Qatar">Qatar</option>
-    <option value="Republic of Macedoni">Republic of Macedoni</option>
+    <option value="Republic of Macedonia">Republic of Macedonia</option>
     <option value="Romania">Romania</option>
     <option value="Russia">Russia</option>
     <option value="Rwanda">Rwanda</option>
     <option value="Saudi Arabia">Saudi Arabia</option>
     <option value="Senegal">Senegal</option>
     <option value="Serbia">Serbia</option>
-    <option value="Serbia and Montenegr">Serbia and Montenegr</option>
+    <option value="Serbia and Montenegro">Serbia and Montenegro</option>
     <option value="Singapore">Singapore</option>
     <option value="Slovakia">Slovakia</option>
     <option value="Slovenia">Slovenia</option>
@@ -144,7 +145,7 @@ country :
     <option value="Tajikistan">Tajikistan</option>
     <option value="Tanzania">Tanzania</option>
     <option value="Thailand">Thailand</option>
-    <option value="The Democratic Repub">The Democratic Repub</option>
+    <option value="The Democratic Republic of Congo">The Democratic Republic of Congo</option>
     <option value="Trinidad and Tobago">Trinidad and Tobago</option>
     <option value="Tunisia">Tunisia</option>
     <option value="Turkey">Turkey</option>
