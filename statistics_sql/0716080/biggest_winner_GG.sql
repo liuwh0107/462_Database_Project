@@ -1,4 +1,6 @@
 #每年得GG獎總數量最多(最大贏家電影)
+#The biggest Golden Globe winner of each year
+
 SELECT temp.year, tmep.film, temp.wins
 FROM (
 SELECT info.year, ANY_VALUE(info.film) as film, ANY_VALUE(info.num_of_wins) as wins

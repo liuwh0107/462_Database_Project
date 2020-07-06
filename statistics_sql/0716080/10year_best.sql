@@ -1,4 +1,6 @@
 #近10年推薦電影(評分高)
+#Top movies in 10 years
+
 SELECT movie.title, all_gender.rating
 FROM movie, all_gender
 WHERE movie.id = all_gender.id
