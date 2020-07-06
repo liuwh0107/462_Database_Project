@@ -5,7 +5,7 @@ FROM (
     FROM(
         SELECT oscar.year, oscar.film, COUNT(*) as num_of_wins
         FROM  oscar
-        WHERE win = "TRUE"
+        WHERE win = 'TRUE'
         GROUP BY oscar.year, oscar.film
         ORDER BY  num_of_wins DESC) as info
     GROUP BY info.year ) as temp;
