@@ -164,7 +164,7 @@ country :
 </select>
  <pre>&nbsp</pre>
  genre :
- <select name="genere">
+ <select name="genre">
     <option value="select">select</option>
     <option value="Action">Action</option>
     <option value="Adult">Adult</option>
