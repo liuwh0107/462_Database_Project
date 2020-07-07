@@ -16,7 +16,7 @@ if ($mysqli->connect_errno) {
 
 // Perform an SQL query
 
-$sql="SELECT m.title 
+$sql="SELECT m.title ,al.rating
 FROM all_gender al, movie_detail md,movie m
 where md.duration<120 and al.id=md.id and m.id=md.id
 ORDER BY al.rating  desc limit 10";
@@ -46,11 +46,12 @@ if ($result->num_rows === 0) {
 
 echo '<div style="font-size:1.25em;color:red">duration<120 TOP 10 </div>';
 $title=title;
+$rating=rating;
 echo '<tr><td>',$title,'</td>';
-
+echo '<td>',$rating,'</td>';
 while ($actor = $result->fetch_assoc()) {    
     echo '<tr><td>',$actor['title'],'</td>';
-   
+    echo '<td>',$actor['rating'],'</td>';
 }
 
 

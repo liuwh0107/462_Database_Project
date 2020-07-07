@@ -10,8 +10,8 @@
 <form action="TOP3_rating_genre.php" method="post">
 <input type="submit" value="TOP3_rating_genre">
 </form>
-<form action="most movie rating>=8  top5 year.php" method="post">
-<input type="submit" value="most movie rating>=8  top5 year">
+<form action="most_movie_rating>=8_top5_year.php" method="post">
+<input type="submit" value="most_movie_rating>=8 _top5_year">
 </form>
 </form>
 <form action="best&worst_directors.php" method="post">
@@ -74,7 +74,7 @@
 <input type="submit" value="Top_movies_in_10_years.php">
 </form>
 <form action="best_movie_top5.php" method="post">
-<input type="submit" value="Top_movies_in_10_years.php">
+<input type="submit" value="best_movie_top5.php">
 </form>
 </form>
 <form action="annual_best_movie.php" method="post">
