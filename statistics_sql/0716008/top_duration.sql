@@ -1,5 +1,5 @@
 /*top 3 duration average rating*/
-SELECT table1.duration from
+SELECT table1.duration,table1.average_rating from
 (SELECT '<= 90' as duration,avg(temp.rating) as average_rating
 from
 (SELECT md.duration,ag.rating 

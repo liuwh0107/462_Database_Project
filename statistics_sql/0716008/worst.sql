@@ -15,6 +15,6 @@ where m.id=ag.id)as chart3
 where chart2.year=chart3.year
 and chart2.rating=chart3.rating
 group by year
-order by year)table1;
+order by year)as table1;
 
 
