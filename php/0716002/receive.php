@@ -275,7 +275,7 @@
         }
 
     }
-    $srating=$order;
+    $srating=$order.' as rate';
     if($sort=='rating_low_to_high')
     {
         $order=' ORDER BY '.$order.' ASC ';
@@ -300,7 +300,7 @@
 
     $from =$from.' movie m, all_gender al_2';
     $where=$where.' m.id=al_2.id ';
-    $sql_str='SELECT'.' DISTINCT m.title, '.$srating.' FROM'.$from.' WHERE '.$where.$order.$limit;
+    $sql_str='SELECT temp.title, temp.rate FROM'.'(SELECT'.' DISTINCT m.title, '.$srating.' FROM'.$from.' WHERE '.$where.$order.$limit.')as temp';
     echo "$sql_str";
     $sql="$sql_str";
     if (!$result = $mysqli->query($sql)) {
