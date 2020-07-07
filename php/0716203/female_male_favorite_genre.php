@@ -1,5 +1,7 @@
+<table border="1">
+<tr>
 <?php
-$mysqli = new mysqli('localhost', 'root', 'office209', 'project');
+$mysqli = new mysqli('localhost', 'root', '', 'project');
 
 // Oh no! A connect_errno exists so the connection attempt failed!
 if ($mysqli->connect_errno) {
@@ -196,10 +198,10 @@ if ($result->num_rows === 0) {
 
 while ($actor = $result->fetch_assoc()) {    
  
-  echo "<pre>"; 
-  echo "0-18: ";
-  echo "{$actor['genre']}&nbsp{$actor['rate']}";
-  echo "</pre>";
+    $string='0-18:';
+    echo '<tr><td>',$string,'</td>';
+    echo '<td>',$actor['genre'],'</td>';
+    echo '<td>',$actor['rate'],'</td>';
 }
 
 $sql="SELECT temp.genre, temp.rate
@@ -233,10 +235,10 @@ if ($result->num_rows === 0) {
 
 while ($actor = $result->fetch_assoc()) {    
  
-  echo "<pre>"; 
-  echo "18-30: ";
-  echo "{$actor['genre']}&nbsp{$actor['rate']}";
-  echo "</pre>";
+    $string='18~30:';
+    echo '<tr><td>',$string,'</td>';
+    echo '<td>',$actor['genre'],'</td>';
+    echo '<td>',$actor['rate'],'</td>';
 }
 
 $sql="SELECT temp.genre, temp.rate
@@ -270,10 +272,10 @@ if ($result->num_rows === 0) {
 
 while ($actor = $result->fetch_assoc()) {    
  
-  echo "<pre>"; 
-  echo "30-45: ";
-  echo "{$actor['genre']}&nbsp{$actor['rate']}";
-  echo "</pre>";
+    $string='30~45:';
+    echo '<tr><td>',$string,'</td>';
+    echo '<td>',$actor['genre'],'</td>';
+    echo '<td>',$actor['rate'],'</td>';
 }
 
 $sql="SELECT temp.genre, temp.rate
@@ -306,14 +308,14 @@ if ($result->num_rows === 0) {
 
 
 while ($actor = $result->fetch_assoc()) {    
- 
-  echo "<pre>"; 
-  echo "45+: ";
-  echo "{$actor['genre']}&nbsp{$actor['rate']}";
-  echo "</pre>";
+   $string='45+:';
+    echo '<tr><td>',$string,'</td>';
+    echo '<td>',$actor['genre'],'</td>';
+    echo '<td>',$actor['rate'],'</td>';
 }
 
 $result->free();
 $mysqli->close();
 ?>
-
+</tr>
+</table>

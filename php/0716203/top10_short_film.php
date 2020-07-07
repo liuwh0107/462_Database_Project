@@ -16,19 +16,15 @@ if ($mysqli->connect_errno) {
 
 // Perform an SQL query
 
-$sql="SELECT temp.director, temp.cnt
-from(SELECT os.director as director, os.cnt+gl.cnt as cnt
-FROM
-(SELECT DISTINCT d.director,count(*)as cnt
-from movie m, oscar o,director d
-where m.title=o.film and o.win='TRUE' and d.id=m.id
-GROUP BY d.director)as os,
-(SELECT DISTINCT d.director,count(*)as cnt
-from movie m, oscar o,director d
-where m.title=o.film and o.win='TRUE' and d.id=m.id
-GROUP BY d.director)as gl
-WHERE os.director=gl.director
-ORDER BY os.cnt+gl.cnt DESC  LIMIT 3) as temp";
+$sql="SELECT table1.movie,table1.rating
+from
+(SELECT cd.title as movie,ag.rating
+from all_gender ag,
+(SELECT m.id,m.title,md.duration
+from movie m,movie_detail md
+where md.duration<=90 and m.id=md.id)as cd/*cd(candidate) is a table with id , film_name and duration <90*/
+where ag.id=cd.id
+order by ag.rating DESC limit 10)as table1;";
 
 
 
@@ -53,17 +49,16 @@ if ($result->num_rows === 0) {
     exit;
 }
 
-echo '<div style="font-size:1.25em;color:red">Most win director</div>';
-$director=director;
-$count=count;
+echo '<div style="font-size:1.25em;color:red">Top 10 Short Movie </div>';
+$movie=movie;
+$rating=rating;
 
-echo '<tr><td>',$director,'</td>';
-echo '<td>',$count,'</td>';
+echo '<tr><td>',$movie,'</td>';
+echo '<td>',$rating,'</td>';
 while ($actor = $result->fetch_assoc()) {    
- 
-    echo '<tr><td>',$actor['director'],'</td>';
-    echo '<td>',$actor['cnt'],'</td>';
-    
+    echo '<tr><td>',$actor['movie'],'</td>';
+    echo '<td>',$actor['rating'],'</td>';
+
 }
 
 

@@ -1,5 +1,7 @@
+<table border="1">
+<tr>
 <?php
-$mysqli = new mysqli('localhost', 'root', 'office209', 'project');
+$mysqli = new mysqli('localhost', 'root', '', 'project');
 
 // Oh no! A connect_errno exists so the connection attempt failed!
 if ($mysqli->connect_errno) {
@@ -14,14 +16,24 @@ if ($mysqli->connect_errno) {
 
 // Perform an SQL query
 
-$sql="SELECT temp.country, temp.rating
-FROM (
-SELECT movie_detail.country, AVG(all_gender.rating) as rating
-FROM movie_detail, all_gender
-WHERE movie_detail.id = all_gender.id
-GROUP BY movie_detail.country
-ORDER BY AVG(all_gender.rating) DESC
-LIMIT 3) as temp";
+$sql="SELECT table1.director,table1.career_years from 
+(SELECT chart1.director,(chart1.year-chart2.year) as career_years
+from
+(SELECT d.director,max(m.year) as year
+from director d,movie m
+where m.id=d.id
+group by director
+order by director)as chart1,
+
+(SELECT d.director,min(m.year) as year
+from director d,movie m
+where m.id=d.id
+group by director
+order by director)as chart2
+where chart1.director=chart2.director)as table1
+where table1.career_years<50
+order by career_years desc limit 3";
+
 
 
 
@@ -45,16 +57,16 @@ if ($result->num_rows === 0) {
     exit;
 }
 
-echo '<div style="font-size:1.25em;color:red">The country producing best movie</div>';
+echo '<div style="font-size:1.25em;color:red">Director with longest career TOP 3 </div>';
+$director=director;
+$career_years=career_years;
+
+echo '<tr><td>',$director,'</td>';
+echo '<td>',$career_years,'</td>';
 while ($actor = $result->fetch_assoc()) {    
-  //echo "<pre>";
-  //echo "{$actor['id']} &nbsp {$actor['rating']}\n";
-  //echo "</pre>";
-  echo "<pre>";
+    echo '<tr><td>',$actor['director'],'</td>';
+    echo '<td>',$actor['career_years'],'</td>';
  
-  
-  echo "{$actor['country']}&nbsp{$actor['rating']}";
-  echo "</pre>";
 }
 
 
@@ -62,4 +74,5 @@ while ($actor = $result->fetch_assoc()) {
 $result->free();
 $mysqli->close();
 ?>
-
+</tr>
+</table>

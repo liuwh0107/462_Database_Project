@@ -1,5 +1,7 @@
+<table border="1">
+<tr>
 <?php
-$mysqli = new mysqli('localhost', 'root', 'office209', 'project');
+$mysqli = new mysqli('localhost', 'root', '', 'project');
 
 // Oh no! A connect_errno exists so the connection attempt failed!
 if ($mysqli->connect_errno) {
@@ -14,14 +16,21 @@ if ($mysqli->connect_errno) {
 
 // Perform an SQL query
 
-$sql="SELECT temp.title, temp.rating
-FROM (
-SELECT movie.title, all_gender.rating
-FROM movie, all_gender
-WHERE movie.id = all_gender.id
-AND movie.year BETWEEN 2009 AND 2019
-ORDER BY all_gender.rating DESC
-LIMIT 100) as temp";
+$sql="SELECT table1.country,table1.best_movie
+from
+(SELECT chart2.country,max(chart2.title) as best_movie
+from
+(SELECT md.country,min(ag.rating) as rating
+from movie_detail md,all_gender ag
+where md.id=ag.id and country!=''
+group by country)as chart1,
+(SELECT md.country,m.title,ag.rating
+from movie_detail md, movie m,all_gender ag
+where md.id=m.id and md.id=ag.id)as chart2
+where chart1.country=chart2.country
+and chart1.rating=chart2.rating
+group by country)as table1";
+
 
 
 
@@ -45,21 +54,21 @@ if ($result->num_rows === 0) {
     exit;
 }
 
-echo '<div style="font-size:1.25em;color:red">Top movies in 10 years</div>';
+echo '<div style="font-size:1.25em;color:red">Country Best Movie  </div>';
+$country=country;
+$best_movie=best_movie;
+
+echo '<tr><td>',$country,'</td>';
+echo '<td>',$best_movie,'</td>';
 while ($actor = $result->fetch_assoc()) {    
-  //echo "<pre>";
-  //echo "{$actor['id']} &nbsp {$actor['rating']}\n";
-  //echo "</pre>";
-  echo "<pre>";
+    echo '<tr><td>',$actor['country'],'</td>';
+    echo '<td>',$actor['best_movie'],'</td>';
  
-  
-  echo "{$actor['title']}&nbsp{$actor['rating']}";
-  echo "</pre>";
 }
-
-
 
 $result->free();
 $mysqli->close();
 ?>
+</tr>
+</table>
 

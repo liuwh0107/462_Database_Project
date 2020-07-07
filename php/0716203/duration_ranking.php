@@ -1,5 +1,7 @@
+<table border="1">
+<tr>
 <?php
-$mysqli = new mysqli('localhost', 'root', 'office209', 'project');
+$mysqli = new mysqli('localhost', 'root', '', 'project');
 
 // Oh no! A connect_errno exists so the connection attempt failed!
 if ($mysqli->connect_errno) {
@@ -14,12 +16,26 @@ if ($mysqli->connect_errno) {
 
 // Perform an SQL query
 
-$sql="SELECT temp.country, temp.cnt
-FROM (
-SELECT movie_detail.country, COUNT(*) as cnt
-FROM movie_detail
-GROUP BY movie_detail.country
-ORDER BY  COUNT(*) DESC) as temp";
+$sql="SELECT table1.duration,table1.average_rating from
+(SELECT '<= 90' as duration,avg(temp.rating) as average_rating
+from
+(SELECT md.duration,ag.rating 
+from movie_detail md,all_gender ag
+where md.id=ag.id and duration<=90)as temp
+union
+SELECT '91~150' as duration,avg(temp.rating) as average_rating
+from
+(SELECT md.duration,ag.rating 
+from movie_detail md,all_gender ag
+where md.id=ag.id and duration between 91 and 150)as temp
+union
+SELECT '> 150' as duration,avg(temp.rating) as average_rating
+from
+(SELECT md.duration,ag.rating 
+from movie_detail md,all_gender ag
+where md.id=ag.id and duration>150)as temp
+order by average_rating desc)as table1 limit 3";
+
 
 
 
@@ -43,16 +59,17 @@ if ($result->num_rows === 0) {
     exit;
 }
 
-echo '<div style="font-size:1.25em;color:red">Most movie of each country</div>';
+echo '<div style="font-size:1.25em;color:red">Duration Ranking </div>';
+$duration=duration;
+$average_rating=average_rating;
+
+echo '<tr><td>',$duration,'</td>';
+echo '<td>',$average_rating,'</td>';
 while ($actor = $result->fetch_assoc()) {    
-  //echo "<pre>";
-  //echo "{$actor['id']} &nbsp {$actor['rating']}\n";
-  //echo "</pre>";
-  echo "<pre>";
+    echo '<tr><td>',$actor['duration'],'</td>';
+    echo '<td>',$actor['average_rating'],'</td>';
+
  
-  
-  echo "{$actor['country']}&nbsp{$actor['cnt']}";
-  echo "</pre>";
 }
 
 
@@ -60,4 +77,5 @@ while ($actor = $result->fetch_assoc()) {
 $result->free();
 $mysqli->close();
 ?>
-
+</tr>
+</table>

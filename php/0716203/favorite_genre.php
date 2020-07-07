@@ -1,5 +1,7 @@
+<table border="1">
+<tr>
 <?php
-$mysqli = new mysqli('localhost', 'root', 'office209', 'project');
+$mysqli = new mysqli('localhost', 'root', '', 'project');
 
 // Oh no! A connect_errno exists so the connection attempt failed!
 if ($mysqli->connect_errno) {
@@ -25,7 +27,7 @@ FROM genre  G, female al
 WHERE G.id=al.id
 GROUP by G.genre)as sumr
 where c.genre=sumr.genre
-ORDER by  sumr.s/c.cnt DESC limit 10) as temp";
+ORDER by  sumr.s/c.cnt DESC limit 3) as temp";
 
 
 
@@ -50,15 +52,38 @@ if ($result->num_rows === 0) {
     exit;
 }
 
-echo '<div style="font-size:1.25em;color:red">Female Favorite Genre TOP10</div>';
+echo '<div style="font-size:1.25em;color:red">Female Favorite Genre </div>';
+
+$genre=genre;
+$rate=rate;
+
+echo '<tr><td>',$genre,'</td>';
+echo '<td>',$rate,'</td>';
 while ($actor = $result->fetch_assoc()) {    
- 
-  echo "<pre>"; 
-  echo "{$actor['genre']}&nbsp{$actor['rate']}";
-  echo "</pre>";
+    echo '<tr><td>',$actor['genre'],'</td>';
+    echo '<td>',$actor['rate'],'</td>';
+  
 }
+?>
+</tr>
+</table>
 
 
+<table border="1">
+<tr>
+<?php
+$mysqli = new mysqli('localhost', 'root', 'office209', 'project');
+
+// Oh no! A connect_errno exists so the connection attempt failed!
+if ($mysqli->connect_errno) {
+    echo "Sorry, this website is experiencing problems.";
+
+    echo "Error: Failed to make a MySQL connection, here is why: \n";
+    echo "Errno: " . $mysqli->connect_errno . "\n";
+    echo "Error: " . $mysqli->connect_error . "\n";
+    
+     exit;
+}
 $sql="SELECT temp.genre, temp.rate
 from(SELECT distinct c.genre as genre, sumr.s/c.cnt as rate
 FROM male al,
@@ -70,7 +95,7 @@ FROM genre  G, male al
 WHERE G.id=al.id
 GROUP by G.genre)as sumr
 where c.genre=sumr.genre
-ORDER by  sumr.s/c.cnt DESC limit 10) as temp";
+ORDER by  sumr.s/c.cnt DESC limit 3) as temp";
 
 
 
@@ -96,15 +121,20 @@ if ($result->num_rows === 0) {
 }
 
 echo '<div style="font-size:1.25em;color:red">Male Favorite Genre TOP10</div>';
+$genre=genre;
+$rate=rate;
+
+echo '<tr><td>',$genre,'</td>';
+echo '<td>',$rate,'</td>';
 while ($actor = $result->fetch_assoc()) {    
- 
-  echo "<pre>"; 
-  echo "{$actor['genre']}&nbsp{$actor['rate']}";
-  echo "</pre>";
+    echo '<tr><td>',$actor['genre'],'</td>';
+    echo '<td>',$actor['rate'],'</td>';
+  
 }
 
 
 $result->free();
 $mysqli->close();
 ?>
-
+</tr>
+</table>

@@ -1,5 +1,7 @@
+<table border="1">
+<tr>
 <?php
-$mysqli = new mysqli('localhost', 'root', 'office209', 'project');
+$mysqli = new mysqli('localhost', 'root', '', 'project');
 
 // Oh no! A connect_errno exists so the connection attempt failed!
 if ($mysqli->connect_errno) {
@@ -14,14 +16,46 @@ if ($mysqli->connect_errno) {
 
 // Perform an SQL query
 
-$sql="SELECT temp.year, temp.rating
-FROM (
-SELECT movie.year, AVG(all_gender.rating) as rating
-FROM movie, all_gender
-WHERE movie.id = all_gender.id
-GROUP BY movie.year
-ORDER BY AVG(all_gender.rating) DESC
-LIMIT 5) as temp";
+$sql="SELECT table1.year,table1.pity_film
+from
+(SELECT chart4.year,min(chart4.film) as pity_film
+from
+(SELECT chart1.year,max(chart1.cnt) as cnt
+from
+(SELECT o.year,o.film,count(*) as cnt
+from oscar o
+where win='FALSE'
+and o.film not in
+(SELECT temp.film
+from
+(SELECT o.year,o.film,o.win,count(*)
+from oscar o 
+where win='TRUE'
+group by year,film,win
+order by film)as temp)
+group by year,film,win
+order by year)as chart1
+group by year)as chart3
+,
+
+(SELECT o.year,o.film,count(*) as cnt
+from oscar o
+where win='FALSE'
+and o.film not in
+(SELECT temp.film
+from
+(SELECT o.year,o.film,o.win,count(*)
+from oscar o
+where win='TRUE'
+group by year,film,win
+order by film)as temp)
+group by year,film,win
+order by year)as chart4
+where chart3.year=chart4.year
+and chart3.cnt=chart4.cnt
+group by year
+order by year)as table1";
+
 
 
 
@@ -45,16 +79,16 @@ if ($result->num_rows === 0) {
     exit;
 }
 
-echo '<div style="font-size:1.25em;color:red">Top 5 years having the best quality of movies</div>';
+echo '<div style="font-size:1.25em;color:red">Oscar Snub  </div>';
+$year=year;
+$pity_film=pity_film;
+
+echo '<tr><td>',$year,'</td>';
+echo '<td>',$pity_film,'</td>';
 while ($actor = $result->fetch_assoc()) {    
-  //echo "<pre>";
-  //echo "{$actor['id']} &nbsp {$actor['rating']}\n";
-  //echo "</pre>";
-  echo "<pre>";
- 
+    echo '<tr><td>',$actor['year'],'</td>';
+    echo '<td>',$actor['pity_film'],'</td>';
   
-  echo "{$actor['year']}&nbsp{$actor['rating']}";
-  echo "</pre>";
 }
 
 
@@ -62,4 +96,6 @@ while ($actor = $result->fetch_assoc()) {
 $result->free();
 $mysqli->close();
 ?>
+</tr>
+</table>
 

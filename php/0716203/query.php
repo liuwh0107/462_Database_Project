@@ -73,6 +73,63 @@
 <form action="Top_movies_in_10_years.php" method="post">
 <input type="submit" value="Top_movies_in_10_years.php">
 </form>
+<form action="best_movie_top5.php" method="post">
+<input type="submit" value="Top_movies_in_10_years.php">
+</form>
+</form>
+<form action="annual_best_movie.php" method="post">
+<input type="submit" value="annual_best_movie.php">
+</form>
+<form action="annual_worst_movie.php" method="post">
+<input type="submit" value="annual_worst_movie.php">
+</form>
+</form>
+<form action="country_best_movie.php" method="post">
+<input type="submit" value="country_best_movie.php">
+</form>
+</form>
+<form action="director_specified_genre.php" method="post">
+<input type="submit" value="director_specified_genre.php">
+</form>
+</form>
+<form action="duration_ranking.php" method="post">
+<input type="submit" value="duration_ranking.php">
+</form>
+</form>
+<form action="longest_career_director.php" method="post">
+<input type="submit" value="longest_career_director.php">
+</form>
+</form>
+<form action="num_of_movie_duration.php" method="post">
+<input type="submit" value="num_of_movie_duration.php">
+</form>
+</form>
+<form action="pity_movie_gg.php" method="post">
+<input type="submit" value="pity_movie_gg.php">
+</form>
+</form>
+<form action="pity_movie_oscar.php" method="post">
+<input type="submit" value="pity_movie_oscar.php">
+</form>
+</form>
+<form action="top3_popular_genre_of_different_age.php" method="post">
+<input type="submit" value="top3_popular_genre_of_different_age.php">
+</form>
+</form>
+<form action="top10_short_film.php" method="post">
+<input type="submit" value="top10_short_film.php">
+</form>
+</form>
+<form action="top100_popular_movie.php" method="post">
+<input type="submit" value="top100_popular_movie.php">
+</form>
+</form>
+<form action="TOP3_Prolific_Directors.php" method="post">
+<input type="submit" value="TOP3_Prolific_Directors.php">
+</form>
+
+
+
 
 
 

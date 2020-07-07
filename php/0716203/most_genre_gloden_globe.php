@@ -1,5 +1,7 @@
+<table border="1">
+<tr>
 <?php
-$mysqli = new mysqli('localhost', 'root', 'office209', 'project');
+$mysqli = new mysqli('localhost', 'root', '', 'project');
 
 // Oh no! A connect_errno exists so the connection attempt failed!
 if ($mysqli->connect_errno) {
@@ -22,7 +24,7 @@ FROM movie m, oscar o
 where  m.title=o.film and o.win= 'TRUE')as temp1
 where temp1.id=g.id
 group by g.genre
-ORDER BY count(*) DESC limit 10) as temp";
+ORDER BY count(*) DESC limit 3) as temp";
 
 
 
@@ -47,12 +49,17 @@ if ($result->num_rows === 0) {
     exit;
 }
 
-echo '<div style="font-size:1.25em;color:red">Most Genre of Gloden Globe TOP10</div>';
+echo '<div style="font-size:1.25em;color:red">Most Genre of Gloden Globe </div>';
+$genre=genre;
+$count=count;
+
+echo '<tr><td>',$genre,'</td>';
+echo '<td>',$count,'</td>';
 while ($actor = $result->fetch_assoc()) {    
- 
-  echo "<pre>"; 
-  echo "{$actor['genre']}&nbsp{$actor['cnt']}";
-  echo "</pre>";
+    echo '<tr><td>',$actor['genre'],'</td>';
+    echo '<td>',$actor['cnt'],'</td>';
+    
+
 }
 
 
@@ -60,4 +67,5 @@ while ($actor = $result->fetch_assoc()) {
 $result->free();
 $mysqli->close();
 ?>
-
+</tr>
+</table>

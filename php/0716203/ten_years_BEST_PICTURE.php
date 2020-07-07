@@ -1,5 +1,7 @@
+<table border="1">
+<tr>
 <?php
-$mysqli = new mysqli('localhost', 'root', 'office209', 'project');
+$mysqli = new mysqli('localhost', 'root', '', 'project');
 
 // Oh no! A connect_errno exists so the connection attempt failed!
 if ($mysqli->connect_errno) {
@@ -40,13 +42,13 @@ if ($result->num_rows === 0) {
     echo "We could not find a match for ID $aid, sorry about that. Please try again.";
     exit;
 }
+$film=film;
 
+echo '<tr><td>',$film,'</td>';
 echo '<div style="font-size:1.25em;color:red">Ten years BEST PICTURE</div>';
 while ($actor = $result->fetch_assoc()) {    
  
-  echo "<pre>"; 
-  echo "{$actor['film']}";
-  echo "</pre>";
+  echo '<tr><td>',$actor['film'],'</td>';
 }
 
 
@@ -54,4 +56,5 @@ while ($actor = $result->fetch_assoc()) {
 $result->free();
 $mysqli->close();
 ?>
-
+</tr>
+</table>

@@ -16,19 +16,22 @@ if ($mysqli->connect_errno) {
 
 // Perform an SQL query
 
-$sql="SELECT temp.director, temp.cnt
-from(SELECT os.director as director, os.cnt+gl.cnt as cnt
-FROM
-(SELECT DISTINCT d.director,count(*)as cnt
-from movie m, oscar o,director d
-where m.title=o.film and o.win='TRUE' and d.id=m.id
-GROUP BY d.director)as os,
-(SELECT DISTINCT d.director,count(*)as cnt
-from movie m, oscar o,director d
-where m.title=o.film and o.win='TRUE' and d.id=m.id
-GROUP BY d.director)as gl
-WHERE os.director=gl.director
-ORDER BY os.cnt+gl.cnt DESC  LIMIT 3) as temp";
+$sql="SELECT table1.duration,table1.number_of_movie
+from
+(SELECT '<= 90' as duration,count(temp.duration) as number_of_movie
+from
+(SELECT duration from movie_detail
+where duration<=90)as temp
+union
+SELECT '91~150' as duration,count(temp.duration) as number_of_movie
+from
+(SELECT duration from movie_detail
+where duration between 91 and 150)as temp
+union
+SELECT '> 150' as duration,count(temp.duration) as number_of_movie
+from
+(SELECT duration from movie_detail
+where duration>150)as temp)as table1";
 
 
 
@@ -53,17 +56,16 @@ if ($result->num_rows === 0) {
     exit;
 }
 
-echo '<div style="font-size:1.25em;color:red">Most win director</div>';
-$director=director;
-$count=count;
+echo '<div style="font-size:1.25em;color:red">Amount of Movies in Different Duration Interval </div>';
+$duration=duration;
+$number_of_movie=number_of_movie;
 
-echo '<tr><td>',$director,'</td>';
-echo '<td>',$count,'</td>';
+echo '<tr><td>',$duration,'</td>';
+echo '<td>',$number_of_movie,'</td>';
 while ($actor = $result->fetch_assoc()) {    
+    echo '<tr><td>',$actor['duration'],'</td>';
+    echo '<td>',$actor['number_of_movie'],'</td>';
  
-    echo '<tr><td>',$actor['director'],'</td>';
-    echo '<td>',$actor['cnt'],'</td>';
-    
 }
 
 
@@ -73,3 +75,4 @@ $mysqli->close();
 ?>
 </tr>
 </table>
+

@@ -1,5 +1,7 @@
+<table border="1">
+<tr>
 <?php
-$mysqli = new mysqli('localhost', 'root', 'office209', 'project');
+$mysqli = new mysqli('localhost', 'root', '', 'project');
 
 // Oh no! A connect_errno exists so the connection attempt failed!
 if ($mysqli->connect_errno) {
@@ -14,16 +16,12 @@ if ($mysqli->connect_errno) {
 
 // Perform an SQL query
 
-$sql="SELECT temp.director, temp.rate
-from(SELECT d.director as director,max(rating) as rate
-FROM director d, all_gender al
-where d.director IN (SELECT temp.director
-FROM (SELECT d.director,count(*) as cnt
-FROM director d
-GROUP BY d.director)as temp
-WHERE temp.cnt>30) AND d.id=al.id
-GROUP BY d.director
-ORDER BY AVG(rating) DESC ) as temp";
+$sql="SELECT top100.title from
+(SELECT m.title,ag.votes,ag.rating
+from movie m,all_gender ag
+where m.id=ag.id
+order by ag.votes DESC limit 100)as top100
+order by top100.rating desc";
 
 
 
@@ -48,12 +46,12 @@ if ($result->num_rows === 0) {
     exit;
 }
 
-echo '<div style="font-size:1.25em;color:red">Masterpiece of directors  </div>';
+echo '<div style="font-size:1.25em;color:red">Top 100 Popular Movie </div>';
+$title=title;
+echo '<tr><td>',$title,'</td>';
 while ($actor = $result->fetch_assoc()) {    
- 
-  echo "<pre>"; 
-  echo "{$actor['director']}&nbsp{$actor['rate']}";
-  echo "</pre>";
+    echo '<tr><td>',$actor['title'],'</td>';
+
 }
 
 
@@ -61,4 +59,5 @@ while ($actor = $result->fetch_assoc()) {
 $result->free();
 $mysqli->close();
 ?>
-
+</tr>
+</table

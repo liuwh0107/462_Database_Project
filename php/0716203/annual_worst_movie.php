@@ -16,19 +16,23 @@ if ($mysqli->connect_errno) {
 
 // Perform an SQL query
 
-$sql="SELECT temp.director, temp.cnt
-from(SELECT os.director as director, os.cnt+gl.cnt as cnt
-FROM
-(SELECT DISTINCT d.director,count(*)as cnt
-from movie m, oscar o,director d
-where m.title=o.film and o.win='TRUE' and d.id=m.id
-GROUP BY d.director)as os,
-(SELECT DISTINCT d.director,count(*)as cnt
-from movie m, oscar o,director d
-where m.title=o.film and o.win='TRUE' and d.id=m.id
-GROUP BY d.director)as gl
-WHERE os.director=gl.director
-ORDER BY os.cnt+gl.cnt DESC  LIMIT 3) as temp";
+$sql="SELECT table1.year,table1.worst_movie
+from
+(SELECT chart3.year,max(chart3.title) as worst_movie
+from
+(SELECT chart.year,min(chart.rating) as rating
+from
+(SELECT m.title,m.year,ag.id,ag.rating
+from movie m,all_gender ag
+where m.id=ag.id)as chart
+group by chart.year)as chart2,
+(SELECT m.title,m.year,ag.rating
+from movie m,all_gender ag
+where m.id=ag.id)as chart3
+where chart2.year=chart3.year
+and chart2.rating=chart3.rating
+group by year
+order by year)as table1";
 
 
 
@@ -53,17 +57,16 @@ if ($result->num_rows === 0) {
     exit;
 }
 
-echo '<div style="font-size:1.25em;color:red">Most win director</div>';
-$director=director;
-$count=count;
+echo '<div style="font-size:1.25em;color:red">Annual Worst Movie </div>';
+$year=year;
+$worst_movie=worst_movie;
 
-echo '<tr><td>',$director,'</td>';
-echo '<td>',$count,'</td>';
+echo '<tr><td>',$year,'</td>';
+echo '<td>',$worst_movie,'</td>';
 while ($actor = $result->fetch_assoc()) {    
- 
-    echo '<tr><td>',$actor['director'],'</td>';
-    echo '<td>',$actor['cnt'],'</td>';
-    
+    echo '<tr><td>',$actor['year'],'</td>';
+    echo '<td>',$actor['worst_movie'],'</td>';
+
 }
 
 

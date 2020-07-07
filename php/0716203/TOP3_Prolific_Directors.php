@@ -16,19 +16,14 @@ if ($mysqli->connect_errno) {
 
 // Perform an SQL query
 
-$sql="SELECT temp.director, temp.cnt
-from(SELECT os.director as director, os.cnt+gl.cnt as cnt
-FROM
-(SELECT DISTINCT d.director,count(*)as cnt
-from movie m, oscar o,director d
-where m.title=o.film and o.win='TRUE' and d.id=m.id
-GROUP BY d.director)as os,
-(SELECT DISTINCT d.director,count(*)as cnt
-from movie m, oscar o,director d
-where m.title=o.film and o.win='TRUE' and d.id=m.id
-GROUP BY d.director)as gl
-WHERE os.director=gl.director
-ORDER BY os.cnt+gl.cnt DESC  LIMIT 3) as temp";
+$sql="SELECT table1.most_productive_director,table1.number_of_movies
+from
+(SELECT chart.director as most_productive_director,chart.cnt as number_of_movies
+from
+(SELECT d.director,count(*) as cnt
+from director d
+group by d.director
+order by cnt desc limit 3)as chart)as table1";
 
 
 
@@ -53,17 +48,16 @@ if ($result->num_rows === 0) {
     exit;
 }
 
-echo '<div style="font-size:1.25em;color:red">Most win director</div>';
-$director=director;
-$count=count;
+echo '<div style="font-size:1.25em;color:red">TOP 3 Prolific Directors </div>';
+$most_productive_director=most_productive_director;
+$number_of_movies=number_of_movies;
 
-echo '<tr><td>',$director,'</td>';
-echo '<td>',$count,'</td>';
+echo '<tr><td>',$most_productive_director,'</td>';
+echo '<td>',$number_of_movies,'</td>';
 while ($actor = $result->fetch_assoc()) {    
- 
-    echo '<tr><td>',$actor['director'],'</td>';
-    echo '<td>',$actor['cnt'],'</td>';
-    
+    echo '<tr><td>',$actor['most_productive_director'],'</td>';
+    echo '<td>',$actor['number_of_movies'],'</td>';
+
 }
 
 

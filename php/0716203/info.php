@@ -6,5 +6,10 @@
 <form action="post.php" method="post">
 <input type="submit" value="dynamic">
 </form>
+<form action="insert.php" method="post">
+<input type="submit" value="insert">
+</form>
+
+
 </body>
 </html>

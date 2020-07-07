@@ -16,19 +16,41 @@ if ($mysqli->connect_errno) {
 
 // Perform an SQL query
 
-$sql="SELECT temp.director, temp.cnt
-from(SELECT os.director as director, os.cnt+gl.cnt as cnt
-FROM
-(SELECT DISTINCT d.director,count(*)as cnt
-from movie m, oscar o,director d
-where m.title=o.film and o.win='TRUE' and d.id=m.id
-GROUP BY d.director)as os,
-(SELECT DISTINCT d.director,count(*)as cnt
-from movie m, oscar o,director d
-where m.title=o.film and o.win='TRUE' and d.id=m.id
-GROUP BY d.director)as gl
-WHERE os.director=gl.director
-ORDER BY os.cnt+gl.cnt DESC  LIMIT 3) as temp";
+$sql="SELECT temp.director,temp.genre_specified
+from
+(SELECT chart2.director,min(chart3.genre)as genre_specified from
+(SELECT chart1.director,max(chart1.avg_rating)as avg_rating
+from
+(SELECT d.director,g.genre,avg(ag.rating) as avg_rating
+from director d,genre g,all_gender ag
+where ag.id=g.id and d.id=ag.id
+and d.director not in
+(SELECT chart1.director
+from
+(SELECT d.director,count(*) as cnt from director d
+group by d.director
+order by cnt)as chart1
+where chart1.cnt<=30)
+group by d.director,g.genre
+)as chart1
+group by chart1.director
+order by chart1.director)as chart2,
+
+(SELECT d.director,g.genre,avg(ag.rating) as avg_rating
+from director d,genre g,all_gender ag
+where ag.id=g.id and d.id=ag.id
+and d.director not in
+(SELECT chart1.director
+from
+(SELECT d.director,count(*) as cnt from director d
+group by d.director
+order by cnt)as chart1
+where chart1.cnt<=30)
+group by d.director,g.genre)as chart3
+where chart2.director=chart3.director
+and chart2.avg_rating=chart3.avg_rating
+group by director
+order by director)as temp;";
 
 
 
@@ -53,17 +75,16 @@ if ($result->num_rows === 0) {
     exit;
 }
 
-echo '<div style="font-size:1.25em;color:red">Most win director</div>';
+echo '<div style="font-size:1.25em;color:red">Director Specified Genre </div>';
 $director=director;
-$count=count;
+$genre_specified=genre_specified;
 
 echo '<tr><td>',$director,'</td>';
-echo '<td>',$count,'</td>';
+echo '<td>',$genre_specified,'</td>';
 while ($actor = $result->fetch_assoc()) {    
- 
     echo '<tr><td>',$actor['director'],'</td>';
-    echo '<td>',$actor['cnt'],'</td>';
-    
+    echo '<td>',$actor['genre_specified'],'</td>';
+ 
 }
 
 

@@ -1,5 +1,7 @@
+<table border="1">
+<tr>
 <?php
-$mysqli = new mysqli('localhost', 'root', 'office209', 'project');
+$mysqli = new mysqli('localhost', 'root', '', 'project');
 
 // Oh no! A connect_errno exists so the connection attempt failed!
 if ($mysqli->connect_errno) {
@@ -46,11 +48,15 @@ if ($result->num_rows === 0) {
 }
 
 echo '<div style="font-size:1.25em;color:red">Both  sex  rating>9  TOP10 year </div>';
+$title=title;
+$rating=rating;
+
+echo '<tr><td>',$title,'</td>';
+echo '<td>',$rating,'</td>';
 while ($actor = $result->fetch_assoc()) {    
- 
-  echo "<pre>"; 
-  echo "{$actor['title']}&nbsp{$actor['rating']}";
-  echo "</pre>";
+    echo '<tr><td>',$actor['title'],'</td>';
+    echo '<td>',$actor['rating'],'</td>';
+
 }
 
 
@@ -58,4 +64,6 @@ while ($actor = $result->fetch_assoc()) {
 $result->free();
 $mysqli->close();
 ?>
+</tr>
+</table>
 

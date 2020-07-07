@@ -1,5 +1,7 @@
+<table border="1">
+<tr>
 <?php
-$mysqli = new mysqli('localhost', 'root', 'office209', 'project');
+$mysqli = new mysqli('localhost', 'root', '', 'project');
 
 // Oh no! A connect_errno exists so the connection attempt failed!
 if ($mysqli->connect_errno) {
@@ -14,16 +16,24 @@ if ($mysqli->connect_errno) {
 
 // Perform an SQL query
 
-$sql="SELECT temp.year, temp.film, temp.wins
-FROM (
-SELECT info.year, ANY_VALUE(info.film) as film, ANY_VALUE(info.num_of_wins) as wins
-FROM(
-    SELECT golden_globe.year, golden_globe.film, COUNT(*) as num_of_wins
-    FROM  golden_globe
-    WHERE win = 'TRUE'
-    GROUP BY golden_globe.year, golden_globe.film
-    ORDER BY  num_of_wins DESC) as info
-GROUP BY info.year) as temp";
+$sql="SELECT table1.year,table1.best_movie
+from
+(SELECT chart3.year,max(chart3.title) as best_movie
+from
+(SELECT chart.year,max(chart.rating) as rating
+from
+(SELECT m.title,m.year,ag.id,ag.rating
+from movie m,all_gender ag
+where m.id=ag.id)as chart
+group by chart.year)as chart2,
+(SELECT m.title,m.year,ag.rating
+from movie m,all_gender ag
+where m.id=ag.id)as chart3
+where chart2.year=chart3.year
+and chart2.rating=chart3.rating
+group by year
+order by year)as table1";
+
 
 
 
@@ -47,16 +57,15 @@ if ($result->num_rows === 0) {
     exit;
 }
 
-echo '<div style="font-size:1.25em;color:red">The biggest Golden Globe winner of each year </div>';
+echo '<div style="font-size:1.25em;color:red">Annual Best Movie  </div>';
+$year=year;
+$best_movie=best_movie;
+echo '<tr><td>',$year,'</td>';
+echo '<td>',$best_movie,'</td>';
 while ($actor = $result->fetch_assoc()) {    
-  //echo "<pre>";
-  //echo "{$actor['id']} &nbsp {$actor['rating']}\n";
-  //echo "</pre>";
-  echo "<pre>";
- 
-  
-  echo "{$actor['year']}&nbsp{$actor['film']}&nbsp{$actor['wins']}";
-  echo "</pre>";
+    echo '<tr><td>',$actor['year'],'</td>';
+    echo '<td>',$actor['best_movie'],'</td>';
+
 }
 
 
@@ -64,4 +73,6 @@ while ($actor = $result->fetch_assoc()) {
 $result->free();
 $mysqli->close();
 ?>
+</tr>
+</table>
 

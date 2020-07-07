@@ -1,5 +1,7 @@
+<table border="1">
+<tr>
 <?php
-$mysqli = new mysqli('localhost', 'root', 'office209', 'project');
+$mysqli = new mysqli('localhost', 'root', '', 'project');
 
 // Oh no! A connect_errno exists so the connection attempt failed!
 if ($mysqli->connect_errno) {
@@ -42,12 +44,34 @@ if ($result->num_rows === 0) {
     exit;
 }
 
+$title=title;
+$rate=rate;
 
+echo '<tr><td>',$title,'</td>';
+echo '<td>',$rate,'</td>';
 while ($actor = $result->fetch_assoc()) {    
- 
-  echo "<pre>"; 
-  echo "{$actor['title']}&nbsp{$actor['avg_0_18']}";
-  echo "</pre>";
+    echo '<tr><td>',$actor['title'],'</td>';
+    echo '<td>',$actor['avg_0_18'],'</td>';
+  
+}
+?>
+</tr>
+</table>
+
+<table border="1">
+<tr>
+<?php
+$mysqli = new mysqli('localhost', 'root', 'office209', 'project');
+
+// Oh no! A connect_errno exists so the connection attempt failed!
+if ($mysqli->connect_errno) {
+    echo "Sorry, this website is experiencing problems.";
+
+    echo "Error: Failed to make a MySQL connection, here is why: \n";
+    echo "Errno: " . $mysqli->connect_errno . "\n";
+    echo "Error: " . $mysqli->connect_error . "\n";
+    
+     exit;
 }
 
 echo '<div style="font-size:1.25em;color:red">Top 100 movies of age from 18 to 30</div>';
@@ -77,15 +101,35 @@ if ($result->num_rows === 0) {
     echo "We could not find a match for ID $aid, sorry about that. Please try again.";
     exit;
 }
+$title=title;
+$rate=rate;
 
+echo '<tr><td>',$title,'</td>';
+echo '<td>',$rate,'</td>';
 
 while ($actor = $result->fetch_assoc()) {    
- 
-  echo "<pre>"; 
-  echo "{$actor['title']}&nbsp{$actor['avg_18_30']}";
-  echo "</pre>";
+    echo '<tr><td>',$actor['title'],'</td>';
+    echo '<td>',$actor['avg_18_30'],'</td>';
+  
 }
+?>
+</tr>
+</table>
+<table border="1">
+<tr>
+<?php
+$mysqli = new mysqli('localhost', 'root', 'office209', 'project');
 
+// Oh no! A connect_errno exists so the connection attempt failed!
+if ($mysqli->connect_errno) {
+    echo "Sorry, this website is experiencing problems.";
+
+    echo "Error: Failed to make a MySQL connection, here is why: \n";
+    echo "Errno: " . $mysqli->connect_errno . "\n";
+    echo "Error: " . $mysqli->connect_error . "\n";
+    
+     exit;
+}
 echo '<div style="font-size:1.25em;color:red">Top 100 movies of age from 30 to 45</div>';
 $sql="SELECT movie.title, all_gender.avg_30_45
 FROM movie, all_gender
@@ -114,14 +158,34 @@ if ($result->num_rows === 0) {
     exit;
 }
 
+$title=title;
+$rate=rate;
 
+echo '<tr><td>',$title,'</td>';
+echo '<td>',$rate,'</td>';
 while ($actor = $result->fetch_assoc()) {    
- 
-  echo "<pre>"; 
-  echo "{$actor['title']}&nbsp{$actor['avg_30_45']}";
-  echo "</pre>";
+    echo '<tr><td>',$actor['title'],'</td>';
+    echo '<td>',$actor['avg_30_45'],'</td>';
 }
+?>
+</tr>
+</table>
 
+<table border="1">
+<tr>
+<?php
+$mysqli = new mysqli('localhost', 'root', 'office209', 'project');
+
+// Oh no! A connect_errno exists so the connection attempt failed!
+if ($mysqli->connect_errno) {
+    echo "Sorry, this website is experiencing problems.";
+
+    echo "Error: Failed to make a MySQL connection, here is why: \n";
+    echo "Errno: " . $mysqli->connect_errno . "\n";
+    echo "Error: " . $mysqli->connect_error . "\n";
+    
+     exit;
+}
 echo '<div style="font-size:1.25em;color:red">Top 100 movies of age more than 45</div>';
 $sql="SELECT movie.title, all_gender.avg_45up
 FROM movie, all_gender
@@ -149,16 +213,20 @@ if ($result->num_rows === 0) {
     echo "We could not find a match for ID $aid, sorry about that. Please try again.";
     exit;
 }
+$title=title;
+$rate=rate;
 
+echo '<tr><td>',$title,'</td>';
+echo '<td>',$rate,'</td>';
 
 while ($actor = $result->fetch_assoc()) {    
- 
-  echo "<pre>"; 
-  echo "{$actor['title']}&nbsp{$actor['avg_45up']}";
-  echo "</pre>";
+    echo '<tr><td>',$actor['title'],'</td>';
+    echo '<td>',$actor['avg_45up'],'</td>';
+  
 }
 
 $result->free();
 $mysqli->close();
 ?>
-
+</tr>
+</table>

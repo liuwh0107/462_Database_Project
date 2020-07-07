@@ -16,19 +16,45 @@ if ($mysqli->connect_errno) {
 
 // Perform an SQL query
 
-$sql="SELECT temp.director, temp.cnt
-from(SELECT os.director as director, os.cnt+gl.cnt as cnt
-FROM
-(SELECT DISTINCT d.director,count(*)as cnt
-from movie m, oscar o,director d
-where m.title=o.film and o.win='TRUE' and d.id=m.id
-GROUP BY d.director)as os,
-(SELECT DISTINCT d.director,count(*)as cnt
-from movie m, oscar o,director d
-where m.title=o.film and o.win='TRUE' and d.id=m.id
-GROUP BY d.director)as gl
-WHERE os.director=gl.director
-ORDER BY os.cnt+gl.cnt DESC  LIMIT 3) as temp";
+$sql="SELECT table1.year,table1.pity_film
+from
+(SELECT chart4.year,min(chart4.film) as pity_film
+from
+(SELECT chart1.year,max(chart1.cnt) as cnt
+from
+(SELECT g.year,g.film,count(*) as cnt
+from golden_globe g 
+where win='FALSE'
+and g.film not in
+(SELECT temp.film
+from
+(SELECT g.year,g.film,g.win,count(*)
+from golden_globe g 
+where win='TRUE'
+group by year,film,win
+order by film)as temp)
+group by year,film,win
+order by year)as chart1
+group by year)as chart3
+,
+
+(SELECT g.year,g.film,count(*) as cnt
+from golden_globe g 
+where win='FALSE'
+and g.film not in
+(SELECT temp.film
+from
+(SELECT g.year,g.film,g.win,count(*)
+from golden_globe g 
+where win='TRUE'
+group by year,film,win
+order by film)as temp)
+group by year,film,win
+order by year)as chart4
+where chart3.year=chart4.year
+and chart3.cnt=chart4.cnt
+group by year
+order by year)as table1";
 
 
 
@@ -53,17 +79,16 @@ if ($result->num_rows === 0) {
     exit;
 }
 
-echo '<div style="font-size:1.25em;color:red">Most win director</div>';
-$director=director;
-$count=count;
+echo '<div style="font-size:1.25em;color:red">Golden Globe Snub  </div>';
+$year=year;
+$pity_film=pity_film;
 
-echo '<tr><td>',$director,'</td>';
-echo '<td>',$count,'</td>';
+echo '<tr><td>',$year,'</td>';
+echo '<td>',$pity_film,'</td>';
 while ($actor = $result->fetch_assoc()) {    
- 
-    echo '<tr><td>',$actor['director'],'</td>';
-    echo '<td>',$actor['cnt'],'</td>';
-    
+    echo '<tr><td>',$actor['year'],'</td>';
+    echo '<td>',$actor['pity_film'],'</td>';
+  
 }
 
 
