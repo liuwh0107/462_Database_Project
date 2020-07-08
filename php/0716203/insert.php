@@ -4,6 +4,7 @@
 <?php
 $title= $_POST['title'];
 ?>
+
 country : 
 <select name="country">
 　<option value="Afghanistan">Afghanistan</option>
