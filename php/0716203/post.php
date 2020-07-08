@@ -160,6 +160,7 @@ country :
     <option value="Yemen">Yemen</option>
     <option value="Yugoslavia">Yugoslavia</option>
     <option value="Zambia">Zambia</option>
+    <option value="others">others</option>
 ...
 </select>
  <pre>&nbsp</pre>
