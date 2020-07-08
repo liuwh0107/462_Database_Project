@@ -16,8 +16,9 @@ if ($mysqli->connect_errno) {
 
 // Perform an SQL query
 
-$sql="SELECT o.film
+$sql="SELECT o.film, o.year
 FROM oscar o
+WHERE o.nomination='BEST PICTURE' AND o.win='TRUE'
 ORDER BY o.year DESC limit 10;";
 
 
@@ -42,13 +43,15 @@ if ($result->num_rows === 0) {
     echo "We could not find a match for ID $aid, sorry about that. Please try again.";
     exit;
 }
-$film=film;
+$film='film';
+$year='year';
 
 echo '<tr><td>',$film,'</td>';
-echo '<div style="font-size:1.25em;color:red">Ten years BEST PICTURE</div>';
+echo '<td>',$year,'</td>';
 while ($actor = $result->fetch_assoc()) {    
- 
-  echo '<tr><td>',$actor['film'],'</td>';
+    echo '<tr><td>',$actor['film'],'</td>';
+    echo '<td>',$actor['year'],'</td>';
+  
 }
 
 

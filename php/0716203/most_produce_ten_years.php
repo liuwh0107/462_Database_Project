@@ -20,7 +20,7 @@ $sql="SELECT temp.year, temp.cnt
 from(SELECT M.year as year,COUNT(*)as  cnt
 FROM movie M
 GROUP BY M.year
-ORDER BY count(*) DESC limit 3) as temp";
+ORDER BY count(*) DESC limit 10) as temp";
 
 
 
