@@ -1,6 +1,19 @@
 
 <?php
-   $mysqli = new mysqli('localhost', 'root', '301850', 'test');
+$country=$_POST['country'] ;
+$genre= $_POST['genre'];
+$rating = $_POST['rating'];
+$title= $_POST['title'];
+$duration= $_POST['duration'];
+$gender= $_POST['gender'];
+$director = $_POST['director'];
+$age= $_POST['age'];
+$year= $_POST['year'];
+
+if($year<=2020&&$year>=1942)
+{
+    $action=hidden;
+   $mysqli = new mysqli('localhost', 'root', '', 'project');
 
 // Oh no! A connect_errno exists so the connection attempt failed!
     if ($mysqli->connect_errno) {
@@ -13,15 +26,7 @@
         exit;
 }
 
-    $country=$_POST['country'] ;
-    $genre= $_POST['genre'];
-    $rating = $_POST['rating'];
-    $title= $_POST['title'];
-    $duration= $_POST['duration'];
-    $gender= $_POST['gender'];
-    $director = $_POST['director'];
-    $age= $_POST['age'];
-    $year= $_POST['year'];
+    
     
     $sql='SELECT movie.id from movie;';
     $num_row=$mysqli->query($sql)->num_rows;
@@ -492,9 +497,20 @@ while ($actor = $result->fetch_assoc()) {
 }
 $result->free();
 $mysqli->close();
+}
 
-
+else
+    {
+        $action=submit;
+        echo "請輸入介於1942~2020的年份";
+    }
 ?>
+<form action="insert.php" method="post">
+<input type="<?php echo $action; ?>" value='重新輸入'>
+</form>
 
+<form action="info.php" method="post">
+<input type='submit'  value='回到主畫面'>
+</form>
 
 
