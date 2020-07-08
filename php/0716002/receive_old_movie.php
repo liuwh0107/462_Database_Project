@@ -54,7 +54,7 @@ $sql_str="SELECT m.id, g.avg_$age ,g.num_$age FROM movie m, $gender g WHERE m.ti
     }
 
     $sql_str="SELECT m.title, g.avg_$age ,g.num_$age FROM movie m, $gender g WHERE m.id='$id' and m.id=g.id";
-    echo $sql_str."\n";
+    echo $sql_up."\n";
     $sql="$sql_str";
     if (!$result = $mysqli->query($sql)) {
         // Oh no! The query failed. 
