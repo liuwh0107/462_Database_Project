@@ -16,14 +16,14 @@ if ($mysqli->connect_errno) {
 
 // Perform an SQL query
 
-$sql="SELECT temp.title, temp.rating
+$sql="SELECT temp.title, temp.rating,temp.year
 FROM (
-SELECT movie.title, all_gender.rating
+SELECT movie.title, all_gender.rating, movie.year
 FROM movie, all_gender
 WHERE movie.id = all_gender.id
 AND movie.year BETWEEN 2009 AND 2019
 ORDER BY all_gender.rating DESC
-LIMIT 100) as temp";
+LIMIT 3) as temp";
 
 
 
@@ -50,15 +50,17 @@ if ($result->num_rows === 0) {
 
 
 echo '<div style="font-size:1.25em;color:red">Top movies in 10 years</div>';
-$title=title;
-$rating=rating;
+$title='title';
+$rating='rating';
+$year='year';
 echo '<tr><td>',$title,'</td>';
 echo '<td>',$rating,'</td>';
+echo '<td>',$year,'</td>';
 while ($actor = $result->fetch_assoc()) {    
     echo '<tr><td>',$actor['title'],'</td>';
     echo '<td>',$actor['rating'],'</td>';
- 
-  
+    echo '<td>',$actor['year'],'</td>';
+   
   
 }
 
