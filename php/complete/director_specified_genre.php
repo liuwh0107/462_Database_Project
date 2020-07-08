@@ -16,9 +16,9 @@ if ($mysqli->connect_errno) {
 
 // Perform an SQL query
 
-$sql="SELECT temp.director,temp.genre_specified
+$sql="SELECT temp.director,temp.genre_specified,temp.genre_avg_rating
 from
-(SELECT chart2.director,min(chart3.genre)as genre_specified from
+(SELECT chart2.director,min(chart3.genre)as genre_specified,chart2.avg_rating as genre_avg_rating from
 (SELECT chart1.director,max(chart1.avg_rating)as avg_rating
 from
 (SELECT d.director,g.genre,avg(ag.rating) as avg_rating
@@ -78,12 +78,14 @@ if ($result->num_rows === 0) {
 echo '<div style="font-size:1.25em;color:red">Director Specified Genre </div>';
 $director=director;
 $genre_specified=genre_specified;
-
+$genre_avg_rating=genre_avg_rating;
 echo '<tr><td>',$director,'</td>';
 echo '<td>',$genre_specified,'</td>';
+echo '<td>',$genre_avg_rating,'</td>';
 while ($actor = $result->fetch_assoc()) {    
     echo '<tr><td>',$actor['director'],'</td>';
     echo '<td>',$actor['genre_specified'],'</td>';
+    echo '<td>',$actor['genre_avg_rating'],'</td>';
  
 }
 

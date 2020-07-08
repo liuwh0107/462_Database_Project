@@ -16,11 +16,11 @@ if ($mysqli->connect_errno) {
 
 // Perform an SQL query
 
-$sql="SELECT table1.country,table1.best_movie
+$sql="SELECT table1.country,table1.best_movie,table1.rating
 from
-(SELECT chart2.country,max(chart2.title) as best_movie
+(SELECT chart2.country,max(chart2.title) as best_movie,chart2.rating
 from
-(SELECT md.country,min(ag.rating) as rating
+(SELECT md.country,max(ag.rating) as rating
 from movie_detail md,all_gender ag
 where md.id=ag.id and country!=''
 group by country)as chart1,
@@ -57,12 +57,14 @@ if ($result->num_rows === 0) {
 echo '<div style="font-size:1.25em;color:red">Country Best Movie  </div>';
 $country=country;
 $best_movie=best_movie;
-
+$rating=rating;
 echo '<tr><td>',$country,'</td>';
 echo '<td>',$best_movie,'</td>';
+echo '<td>',$rating,'</td>';
 while ($actor = $result->fetch_assoc()) {    
     echo '<tr><td>',$actor['country'],'</td>';
     echo '<td>',$actor['best_movie'],'</td>';
+    echo '<td>',$actor['rating'],'</td>';
  
 }
 

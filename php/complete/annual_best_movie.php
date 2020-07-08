@@ -16,9 +16,9 @@ if ($mysqli->connect_errno) {
 
 // Perform an SQL query
 
-$sql="SELECT table1.year,table1.best_movie
+$sql="SELECT table1.year,table1.best_movie,table1.rating
 from
-(SELECT chart3.year,max(chart3.title) as best_movie
+(SELECT chart3.year,max(chart3.title) as best_movie,chart3.rating
 from
 (SELECT chart.year,max(chart.rating) as rating
 from
@@ -60,11 +60,14 @@ if ($result->num_rows === 0) {
 echo '<div style="font-size:1.25em;color:red">Annual Best Movie  </div>';
 $year=year;
 $best_movie=best_movie;
+$rating=rating;
 echo '<tr><td>',$year,'</td>';
 echo '<td>',$best_movie,'</td>';
+echo '<td>',$rating,'</td>';
 while ($actor = $result->fetch_assoc()) {    
     echo '<tr><td>',$actor['year'],'</td>';
     echo '<td>',$actor['best_movie'],'</td>';
+    echo '<td>',$actor['rating'],'</td>';
 
 }
 

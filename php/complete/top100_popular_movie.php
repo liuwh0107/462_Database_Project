@@ -16,7 +16,7 @@ if ($mysqli->connect_errno) {
 
 // Perform an SQL query
 
-$sql="SELECT top100.title from
+$sql="SELECT top100.title as movie,top100.votes as num_vote,top100.rating from
 (SELECT m.title,ag.votes,ag.rating
 from movie m,all_gender ag
 where m.id=ag.id
@@ -47,10 +47,17 @@ if ($result->num_rows === 0) {
 }
 
 echo '<div style="font-size:1.25em;color:red">Top 100 Popular Movie </div>';
-$title=title;
+$title=movie;
+$vote=num_vote;
+$rating=rating;
 echo '<tr><td>',$title,'</td>';
+echo '<td>',$vote,'</td>';
+echo '<td>',$rating,'</td>';
+
 while ($actor = $result->fetch_assoc()) {    
-    echo '<tr><td>',$actor['title'],'</td>';
+    echo '<tr><td>',$actor['movie'],'</td>';
+    echo '<td>',$actor['num_vote'],'</td>';
+    echo '<td>',$actor['rating'],'</td>';
 
 }
 

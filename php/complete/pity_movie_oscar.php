@@ -16,9 +16,9 @@ if ($mysqli->connect_errno) {
 
 // Perform an SQL query
 
-$sql="SELECT table1.year,table1.pity_film
+$sql="SELECT table1.year,table1.snub,table1.cnt as num_nominate,'0' as num_win
 from
-(SELECT chart4.year,min(chart4.film) as pity_film
+(SELECT chart4.year,min(chart4.film) as snub,chart4.cnt
 from
 (SELECT chart1.year,max(chart1.cnt) as cnt
 from
@@ -81,13 +81,18 @@ if ($result->num_rows === 0) {
 
 echo '<div style="font-size:1.25em;color:red">Oscar Snub  </div>';
 $year=year;
-$pity_film=pity_film;
-
+$snub=snub;
+$num_nominate=num_nominate;
+$num_win=num_win;
 echo '<tr><td>',$year,'</td>';
-echo '<td>',$pity_film,'</td>';
+echo '<td>',$snub,'</td>';
+echo '<td>',$num_nominate,'</td>';
+echo '<td>',$num_win,'</td>';
 while ($actor = $result->fetch_assoc()) {    
     echo '<tr><td>',$actor['year'],'</td>';
-    echo '<td>',$actor['pity_film'],'</td>';
+    echo '<td>',$actor['snub'],'</td>';
+    echo '<td>',$actor['num_nominate'],'</td>';
+    echo '<td>',$actor['num_win'],'</td>';
   
 }
 
