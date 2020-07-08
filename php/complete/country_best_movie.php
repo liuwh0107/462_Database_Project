@@ -55,9 +55,9 @@ if ($result->num_rows === 0) {
 }
 
 echo '<div style="font-size:1.25em;color:red">Country Best Movie  </div>';
-$country=country;
-$best_movie=best_movie;
-$rating=rating;
+$country='country';
+$best_movie='best_movie';
+$rating='rating';
 echo '<tr><td>',$country,'</td>';
 echo '<td>',$best_movie,'</td>';
 echo '<td>',$rating,'</td>';
