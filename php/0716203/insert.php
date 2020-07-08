@@ -210,8 +210,6 @@ country :
 </select>
 <pre>&nbsp</pre>
 
-title : <input type="text" name="title">
-<pre>&nbsp</pre>
 duration :<input type="text" name="duration">
 <pre>&nbsp</pre>
 gender :

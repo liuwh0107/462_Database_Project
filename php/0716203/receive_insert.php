@@ -10,6 +10,7 @@ $director = $_POST['director'];
 $age= $_POST['age'];
 $year= $_POST['year'];
 
+
 if($year<=2020&&$year>=1942)
 {
     $action=hidden;
