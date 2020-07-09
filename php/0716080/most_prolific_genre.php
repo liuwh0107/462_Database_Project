@@ -49,7 +49,7 @@ if ($result->num_rows === 0) {
 
 echo '<div style="font-size:1.25em;color:red">拍攝最多的電影類型 </div>';
 $genre=Genre;
-$count='# of movies';
+$count='# of Movies';
 
 echo '<tr><td>','#','</td>';
 echo '<td>',$genre,'</td>';

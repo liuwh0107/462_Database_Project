@@ -47,7 +47,7 @@ if ($result->num_rows === 0) {
 
 echo '<div style="font-size:1.25em;color:red">出產電影數量前10多的年份 </div>';
 $year=Year;
-$count='# of movies';
+$count='# of Movies';
 
 echo '<tr><td>','#','</td>';
 echo '<td>',$year,'</td>';

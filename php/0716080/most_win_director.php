@@ -55,7 +55,7 @@ if ($result->num_rows === 0) {
 
 echo '<div style="font-size:1.25em;color:red">得過最多獎項的導演</div>';
 $director=Director;
-$count='# of wins';
+$count='# of Awards';
 
 echo '<tr><td>','#','</td>';
 echo '<td>',$director,'</td>';

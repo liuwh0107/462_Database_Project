@@ -60,7 +60,7 @@ echo '<td>',$rate,'</td>';
 while ($actor = $result->fetch_assoc()) {    
     $rowid = $rowid + 1;
     echo '<tr><td>',$rowid,'</td>';
-    echo '<tr><td>',$actor['director'],'</td>';
+    echo '<td>',$actor['director'],'</td>';
     echo '<td>',$actor['rate'],'</td>';
  
 }

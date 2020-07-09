@@ -48,7 +48,7 @@ if ($result->num_rows === 0) {
 
 echo '<div style="font-size:1.25em;color:red">生產最多評分>8電影的5年 </div>';
 $year=Year;
-$count=Count;
+$count='# of Movies';
 
 echo '<tr><td>','#','</td>';
 echo '<td>',$year,'</td>';

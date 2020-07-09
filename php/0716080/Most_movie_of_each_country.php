@@ -49,7 +49,7 @@ if ($result->num_rows === 0) {
 echo '<div style="font-size:1.25em;color:red">各國電影數量排行榜</div>';
 
 $country=Country;
-$count='# of movies';
+$count='# of Movies';
 
 echo '<tr><td>','#','</td>';
 echo '<td>',$country,'</td>';

@@ -55,7 +55,7 @@ if ($result->num_rows === 0) {
 
 echo '<div style="font-size:1.25em;color:red">導演作品平均得分(作品數量>30)</div>';
 $director=Director;
-$rate='Average Rating';
+$rate='Rating';
 
 echo '<tr><td>','#','</td>';
 echo '<td>',$director,'</td>';

@@ -58,7 +58,7 @@ if ($result->num_rows === 0) {
 
 echo '<div style="font-size:1.25em;color:red">各片長區間的電影數量</div>';
 $duration=Duration;
-$number_of_movie='# of movies';
+$number_of_movie='# of Movies';
 
 echo '<tr><td>','#','</td>';
 echo '<td>',$duration,'</td>';

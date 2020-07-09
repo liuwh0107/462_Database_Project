@@ -82,7 +82,7 @@ if ($result->num_rows === 0) {
 echo '<div style="font-size:1.25em;color:red">金球獎最大遺珠 (每年沒得獎的電影中被提名次數最多的電影)</div>';
 $year=Year;
 $snub=Title;
-$num_nominate='# of nominations';
+$num_nominate='# of Nominations';
 echo '<tr><td>','#','</td>';
 echo '<td>',$year,'</td>';
 echo '<td>',$snub,'</td>';

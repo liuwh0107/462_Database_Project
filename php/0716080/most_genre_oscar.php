@@ -49,7 +49,7 @@ if ($result->num_rows === 0) {
 
 echo '<div style="font-size:1.25em;color:red">奧斯卡獎得獎數量最多的電影類型 </div>';
 $genre=Genre;
-$count='# of wins';
+$count='# of Awards';
 
 echo '<tr><td>','#','</td>';
 echo '<td>',$genre,'</td>';
