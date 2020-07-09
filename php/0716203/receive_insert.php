@@ -264,7 +264,7 @@ if ($result->num_rows === 0) {
     echo "We could not find a match for ID $aid, sorry about that. Please try again.";
     exit;
 }  
-
+echo "評分完成";
 }
 else
     {
