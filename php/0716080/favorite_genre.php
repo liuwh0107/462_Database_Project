@@ -125,7 +125,7 @@ if ($result->num_rows === 0) {
 
 echo '<div style="font-size:1.25em;color:red">男性評分最高的電影類型</div>';
 $genre=Genre;
-$rate=Rate;
+$rate=Rating;
 
 echo '<tr><td>','#','</td>';
 echo '<td>',$genre,'</td>';
