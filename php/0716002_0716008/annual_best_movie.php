@@ -1,7 +1,7 @@
 <table border="1">
 <tr>
 <?php
-$mysqli = new mysqli('localhost', 'root', '301850', 'project');
+$mysqli = new mysqli('localhost', 'root', '', 'project');
 
 // Oh no! A connect_errno exists so the connection attempt failed!
 if ($mysqli->connect_errno) {
@@ -16,22 +16,23 @@ if ($mysqli->connect_errno) {
 
 // Perform an SQL query
 
-$sql="SELECT * from
-(SELECT gen.genre,count(*)as cnt
-from genre gen,
-(SELECT m.title,m.id 
-from movie m,
-(SELECT chart1.year,chart1.film,count(*) as cnt from
-(SELECT g.year,g.film,g.win from golden_globe g
-where g.win='TRUE')as chart1
-group by chart1.year,chart1.film)as chart2
-where m.title=chart2.film)as chart3
-where gen.id=chart3.id
-group by gen.genre)as table1
-order by table1.cnt DESC limit 3;";
-
-
-
+$sql="SELECT table1.year,table1.best_movie,table1.rating
+            from(
+                SELECT chart3.year,max(chart3.title) as best_movie,chart3.rating
+                from(
+                    SELECT chart.year,max(chart.rating) as rating
+                    from(
+                        SELECT m.title,m.year,ag.id,ag.rating
+                        from movie m,all_gender ag
+                        where m.id=ag.id)as chart
+                    group by chart.year)as chart2, (
+                    SELECT m.title,m.year,ag.rating
+                    from movie m,all_gender ag
+                    where m.id=ag.id)as chart3
+                where chart2.year=chart3.year
+                and chart2.rating=chart3.rating
+                group by year
+                order by year)as table1";
 
 if (!$result = $mysqli->query($sql)) {
     // Oh no! The query failed. 
@@ -53,20 +54,21 @@ if ($result->num_rows === 0) {
     exit;
 }
 
-echo '<div style="font-size:1.25em;color:red">金球獎得獎數量最多的電影類型 </div>';
-$genre=Genre;
-$count='# of wins';
-
+echo '<div style="font-size:1.25em;color:red">年度最佳電影</div>';
+$year=Year;
+$best_movie=Title;
+$rating=Rating;
 echo '<tr><td>','#','</td>';
-echo '<td>',$genre,'</td>';
-echo '<td>',$count,'</td>';
+echo '<td>',$year,'</td>';
+echo '<td>',$best_movie,'</td>';
+echo '<td>',$rating,'</td>';
+$rowid = 1;
 while ($actor = $result->fetch_assoc()) {    
-    $rowid = $rowid + 1;
     echo '<tr><td>',$rowid,'</td>';
-    echo '<td>',$actor['genre'],'</td>';
-    echo '<td>',$actor['cnt'],'</td>';
-    
-
+    echo '<td>',$actor['year'],'</td>';
+    echo '<td>',$actor['best_movie'],'</td>';
+    echo '<td>',$actor['rating'],'</td>';
+    $rowid = $rowid + 1;
 }
 
 
@@ -76,3 +78,4 @@ $mysqli->close();
 ?>
 </tr>
 </table>
+
