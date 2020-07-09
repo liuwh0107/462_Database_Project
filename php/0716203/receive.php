@@ -360,54 +360,57 @@
         // Oh, no rows! Sometimes that's expected and okay, sometimes
         // it is not. You decide. In this case, maybe actor_id was too
         // large? 
-        echo "We could not find a match for ID $aid, sorry about that. Please try again.";
-        exit;
+        echo "抱歉，並未查詢到符合條件的電影<br>";
+        
     }
-    
-    //echo '<div style="font-size:1.25em;color:red">avg_rating_of_director(movie>30) </div>';
-    $title=Title;
-    $rate=Rating;
-    echo '<tr><td>','#','</td>';
-    echo '<td>',$title,'</td>';
-    echo '<td>',$rate,'</td>';
-    if($duration!='select')
+    else
     {
-        echo '<td>','Duration','</td>';
-    }
-    if($director!='')
-    {
-        echo '<td>','Director','</td>';
-    }
-    if($start!=''&& $end!='')
-    {
-        echo '<td>','Year','</td>';
-    }
-    if($vote_number!='')
-    {
-        echo '<td>','# of Votes','</td>';
-    }
-    while ($ans = $result->fetch_assoc()) {    
-        $rowid = $rowid + 1;
-        echo '<tr><td>',$rowid,'</td>';
-        echo '<td>',$ans['title'],'</td>';
-        echo '<td>',$ans['rate'],'</td>';
+
+        //echo '<div style="font-size:1.25em;color:red">avg_rating_of_director(movie>30) </div>';
+        $title=Title;
+        $rate=Rating;
+        echo '<tr><td>','#','</td>';
+        echo '<td>',$title,'</td>';
+        echo '<td>',$rate,'</td>';
         if($duration!='select')
         {
-            echo '<td>',$ans['duration'],'</td>';
+            echo '<td>','Duration','</td>';
         }
         if($director!='')
         {
-            echo '<td>',$ans['director'],'</td>';
+            echo '<td>','Director','</td>';
         }
         if($start!=''&& $end!='')
         {
-            echo '<td>',$ans['year'],'</td>';
+            echo '<td>','Year','</td>';
         }
         if($vote_number!='')
         {
-            echo '<td>',$ans['vote_number'],'</td>';
+            echo '<td>','# of Votes','</td>';
         }
-        
+        while ($ans = $result->fetch_assoc()) {    
+            $rowid = $rowid + 1;
+            echo '<tr><td>',$rowid,'</td>';
+            echo '<td>',$ans['title'],'</td>';
+            echo '<td>',$ans['rate'],'</td>';
+            if($duration!='select')
+            {
+                echo '<td>',$ans['duration'],'</td>';
+            }
+            if($director!='')
+            {
+                echo '<td>',$ans['director'],'</td>';
+            }
+            if($start!=''&& $end!='')
+            {
+                echo '<td>',$ans['year'],'</td>';
+            }
+            if($vote_number!='')
+            {
+                echo '<td>',$ans['vote_number'],'</td>';
+            }
+            
+        }
     }
     
     
