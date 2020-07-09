@@ -1,7 +1,7 @@
 <table border="1">
 <tr>
 <?php
-$mysqli = new mysqli('localhost', 'root', 'password', 'project');
+$mysqli = new mysqli('localhost', 'root', '19991016lee', 'final_project');
 
 // Oh no! A connect_errno exists so the connection attempt failed!
 if ($mysqli->connect_errno) {
@@ -55,9 +55,9 @@ if ($result->num_rows === 0) {
 }
 
 echo '<div style="font-size:1.25em;color:red">年度最佳電影</div>';
-$year=Year;
-$best_movie=Title;
-$rating=Rating;
+$year='Year';
+$best_movie='Title';
+$rating='Rating';
 echo '<tr><td>','#','</td>';
 echo '<td>',$year,'</td>';
 echo '<td>',$best_movie,'</td>';
