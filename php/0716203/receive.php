@@ -303,7 +303,7 @@
     $from =$from.' movie m, all_gender al_2';
     $where=$where.' m.id=al_2.id ';
     $sql_str='SELECT temp.title, temp.rate FROM'.'(SELECT'.' DISTINCT m.title, '.$srating.' FROM'.$from.' WHERE '.$where.$order.$limit.')as temp';
-    echo "$sql_str";
+   // echo "$sql_str";
     $sql="$sql_str";
     if (!$result = $mysqli->query($sql)) {
         // Oh no! The query failed. 
@@ -342,3 +342,10 @@
 ?>
 </tr>
 </table>
+
+<form action="post.php" method="post">
+<input type="submit" value='重新查詢'>
+</form>
+<form action="info.php" method="post">
+<input type="submit" value='回到主畫面'>
+</form>

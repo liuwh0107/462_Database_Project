@@ -452,6 +452,9 @@ $mysqli->close();
 ?>
 </tr>
 </table>
+<form action="rate.php" method="post">
+<input type='submit'  value='重新評分'>
+</form>
 <form action="info.php" method="post">
 <input type='submit'  value='回到主畫面'>
 </form>

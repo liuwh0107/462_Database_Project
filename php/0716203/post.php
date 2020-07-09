@@ -1,12 +1,9 @@
 <html>
 <body>
-<form action="receive_insert.php" method="post">
-<?php
-$title= $_POST['title'];
-?>
-
+<form action="receive.php" method="post">
 country : 
 <select name="country">
+     <option value="select">select</option>
 　<option value="Afghanistan">Afghanistan</option>
 　<option value="Albania">Albania</option>
 　<option value="Algeria">Algeria</option>
@@ -169,6 +166,7 @@ country :
  <pre>&nbsp</pre>
  genre :
  <select name="genre">
+    <option value="select">select</option>
     <option value="Action">Action</option>
     <option value="Adult">Adult</option>
     <option value="Adventure">Adventure</option>
@@ -198,6 +196,8 @@ country :
  <pre>&nbsp</pre>
  rating :
  <select name="rating">
+    <option value="select">select</option>
+    <option value="0">0</option>
     <option value="1">1</option>
     <option value="2">2</option>
     <option value="3">3</option>
@@ -210,11 +210,28 @@ country :
     <option value="10">10</option>
 </select>
 <pre>&nbsp</pre>
-
-duration :<input type="text" name="duration">
+sort :
+<select name="sort">
+    <option value="lexicographical">lexicographical</option>
+    <option value="rating_low_to_high">rating_low_to_high</option>
+    <option value="rating_high_to_low">rating_high_to_low</option>
+</select>
+<pre>&nbsp</pre>
+title : <input type="text" name="title">
+<pre>&nbsp</pre>
+duration :
+<select name="duration">
+    <option value="select">select</option>
+    <option value="lower_than_90">lower_than_90</option>
+    <option value="90_to_150">90_to_150</option>
+    <option value="higher than 150">higher_than_150</option>
+</select>
+<pre>&nbsp</pre>
+number of rows : <input type="text" name="rows">(>0)
 <pre>&nbsp</pre>
 gender :
 <select name="gender">
+    <option value="all_gender">all</option>
     <option value="male">male</option>
     <option value="female">female</option>
     </select>
@@ -223,17 +240,25 @@ director: <input type="text" name="director">
 <pre>&nbsp</pre>
 age:
 <select name="age">
+    <option value="select">select</option>
     <option value="0_18">0-18</option>
     <option value="18_30">18-30</option>
     <option value="30_45">30-45</option>
     <option value="45up">45up</option>
     </select>
     <pre>&nbsp</pre>
-
-    year :<input type="text" name="year">
+    award:
+    <select name="award">
+    <option value="select">select</option>
+    <option value="oscar">oscar</option>
+    <option value="golden_globe">golden_globe</option>
+    </select>
     <pre>&nbsp</pre>
-    <input type='hidden' name='title' value="<?php echo $title; ?>" >
-    <input type="submit" value="提交">
+    year :<input type="text" name="start">~<input type="text" name="end">
+    <pre>&nbsp</pre>
+    vote number : <input type="text" name="vote_number">(>0)
+    <pre>&nbsp</pre>
+    <input type="submit" value="提交"">
 </form>
 <form action="info.php" method="post">
 <input type="submit" value='回到主畫面'>

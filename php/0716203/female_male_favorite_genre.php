@@ -1,46 +1,31 @@
-
+<table border="1">
+<tr>
 <?php
-$country=$_POST['country'] ;
-$genre= $_POST['genre'];
-$rating = $_POST['rating'];
-$title= $_POST['title'];
-$duration= $_POST['duration'];
-$gender= $_POST['gender'];
-$director = $_POST['director'];
-$age= $_POST['age'];
-$year= $_POST['year'];
-
-
-if($year<=2020&&$year>=1888&&$duration>0&&$director!="" )
-{
-    $action=hidden;
-    $action2=submit;
-   $mysqli = new mysqli('localhost', 'root', '', 'project');
+$mysqli = new mysqli('localhost', 'root', '', 'project');
 
 // Oh no! A connect_errno exists so the connection attempt failed!
-    if ($mysqli->connect_errno) {
-        echo "Sorry, this website is experiencing problems.";
+if ($mysqli->connect_errno) {
+    echo "Sorry, this website is experiencing problems.";
 
-        echo "Error: Failed to make a MySQL connection, here is why: \n";
-        echo "Errno: " . $mysqli->connect_errno . "\n";
-        echo "Error: " . $mysqli->connect_error . "\n";
+    echo "Error: Failed to make a MySQL connection, here is why: \n";
+    echo "Errno: " . $mysqli->connect_errno . "\n";
+    echo "Error: " . $mysqli->connect_error . "\n";
     
-        exit;
+     exit;
 }
 
-    
-    
-    $sql='SELECT movie.id from movie;';
-    $num_row=$mysqli->query($sql)->num_rows;
-    //echo "rows:".$num_row;
-    $id="new".$num_row;
-    //echo "ID:".$id;
-    //error handling
-    
-    $sql='INSERT INTO movie (id,title,year) values ("'.$id.'","'.$title.'","'.$year.'")';
-    //echo $sql;
-   
- if (!$result = $mysqli->query($sql)) {
+// Perform an SQL query
+echo '<div style="font-size:1.25em;color:red">女性各年齡層評分最高的電影類型</div>';
+
+$sql="SELECT temp.genre, temp.rate
+from(SELECT g.genre as genre ,avg(f.avg_0_18) as rate
+from female f, genre g
+where f.id=g.id
+GROUP BY g.genre
+ORDER BY avg(f.avg_0_18) DESC limit 1) as temp";
+
+
+if (!$result = $mysqli->query($sql)) {
     // Oh no! The query failed. 
     echo "Sorry, the website is experiencing problems.";
     echo "Error: Our query failed to execute and here is why: \n";
@@ -49,42 +34,7 @@ if($year<=2020&&$year>=1888&&$duration>0&&$director!="" )
     echo "Error: " . $mysqli->error . "\n";
     exit;
 }
-    //echo "---------------------";
-$sql='INSERT INTO movie_detail (id,duration,country) values ("'.$id.'","'.$duration.'","'.$country.'")';
-   // echo $sql;
-   
- if (!$result = $mysqli->query($sql)) {
-    // Oh no! The query failed. 
-    echo "Sorry, the website is experiencing problems.";
-    echo "Error: Our query failed to execute and here is why: \n";
-    echo "Query: " . $sql . "\n";
-    echo "Errno: " . $mysqli->errno . "\n";
-    echo "Error: " . $mysqli->error . "\n";
-    exit;
-}
-// Phew, we made it. We know our MySQL connection and query 
-// succeeded, but do we have a result?
-if ($result->num_rows === 0) {
-    // Oh, no rows! Sometimes that's expected and okay, sometimes
-    // it is not. You decide. In this case, maybe actor_id was too
-    // large? 
-    echo "We could not find a match for ID $aid, sorry about that. Please try again.";
-    exit;
-}
-    
- //echo "---------------------";
-$sql='INSERT INTO genre (id,genre) values ("'.$id.'","'.$genre.'")';
-    //echo $sql;
-   
- if (!$result = $mysqli->query($sql)) {
-    // Oh no! The query failed. 
-    echo "Sorry, the website is experiencing problems.";
-    echo "Error: Our query failed to execute and here is why: \n";
-    echo "Query: " . $sql . "\n";
-    echo "Errno: " . $mysqli->errno . "\n";
-    echo "Error: " . $mysqli->error . "\n";
-    exit;
-}
+
 // Phew, we made it. We know our MySQL connection and query 
 // succeeded, but do we have a result?
 if ($result->num_rows === 0) {
@@ -95,12 +45,29 @@ if ($result->num_rows === 0) {
     exit;
 }
 
-//echo "---------------------";
-$sql='INSERT INTO director (id,director) values ("'.$id.'","'.$director.'")';
-    //echo $sql;
+$string1=Age;
+$string2=Genre;
+$string3=Rating;
+echo '<tr><td>',$string1,'</td>';
+echo '<td>',$string2,'</td>';
+echo '<td>',$string3,'</td>';
+while ($actor = $result->fetch_assoc()) {    
+ 
+    $string='0~18';
+    echo '<tr><td>',$string,'</td>';
+    echo '<td>',$actor['genre'],'</td>';
+    echo '<td>',$actor['rate'],'</td>';
+}
 
-   
- if (!$result = $mysqli->query($sql)) {
+$sql="SELECT temp.genre, temp.rate
+from(SELECT g.genre as genre ,avg(f.avg_18_30) as rate
+from female f, genre g
+where f.id=g.id
+GROUP BY g.genre
+ORDER BY avg(f.avg_18_30) DESC limit 1) as temp";
+
+
+if (!$result = $mysqli->query($sql)) {
     // Oh no! The query failed. 
     echo "Sorry, the website is experiencing problems.";
     echo "Error: Our query failed to execute and here is why: \n";
@@ -109,6 +76,7 @@ $sql='INSERT INTO director (id,director) values ("'.$id.'","'.$director.'")';
     echo "Error: " . $mysqli->error . "\n";
     exit;
 }
+
 // Phew, we made it. We know our MySQL connection and query 
 // succeeded, but do we have a result?
 if ($result->num_rows === 0) {
@@ -119,12 +87,24 @@ if ($result->num_rows === 0) {
     exit;
 }
 
-//echo "---------------------";
-$sql='INSERT INTO all_gender (id,rating,votes,avg_0_18,num_0_18,avg_18_30,num_18_30,avg_30_45,num_30_45,avg_45up,num_45up) values ("'.$id.'",0,0,0,0,0,0,0,0,0,0)';
-  //  echo $sql;
 
-   
- if (!$result = $mysqli->query($sql)) {
+while ($actor = $result->fetch_assoc()) {    
+ 
+    $string='18~30';
+    echo '<tr><td>',$string,'</td>';
+    echo '<td>',$actor['genre'],'</td>';
+    echo '<td>',$actor['rate'],'</td>';
+}
+
+$sql="SELECT temp.genre, temp.rate
+from(SELECT g.genre as genre ,avg(f.avg_30_45) as rate
+from female f, genre g
+where f.id=g.id
+GROUP BY g.genre
+ORDER BY avg(f.avg_30_45) DESC limit 1) as temp";
+
+
+if (!$result = $mysqli->query($sql)) {
     // Oh no! The query failed. 
     echo "Sorry, the website is experiencing problems.";
     echo "Error: Our query failed to execute and here is why: \n";
@@ -133,6 +113,7 @@ $sql='INSERT INTO all_gender (id,rating,votes,avg_0_18,num_0_18,avg_18_30,num_18
     echo "Error: " . $mysqli->error . "\n";
     exit;
 }
+
 // Phew, we made it. We know our MySQL connection and query 
 // succeeded, but do we have a result?
 if ($result->num_rows === 0) {
@@ -141,14 +122,26 @@ if ($result->num_rows === 0) {
     // large? 
     echo "We could not find a match for ID $aid, sorry about that. Please try again.";
     exit;
-}  
+}
 
-//echo "---------------------";
-$sql='INSERT INTO male (id,rating,votes,avg_0_18,num_0_18,avg_18_30,num_18_30,avg_30_45,num_30_45,avg_45up,num_45up) values ("'.$id.'",0,0,0,0,0,0,0,0,0,0)';
-   // echo $sql;
 
-   
- if (!$result = $mysqli->query($sql)) {
+while ($actor = $result->fetch_assoc()) {    
+ 
+    $string='30~45';
+    echo '<tr><td>',$string,'</td>';
+    echo '<td>',$actor['genre'],'</td>';
+    echo '<td>',$actor['rate'],'</td>';
+}
+
+$sql="SELECT temp.genre, temp.rate
+from(SELECT g.genre as genre ,avg(f.avg_45up) as rate
+from female f, genre g
+where f.id=g.id
+GROUP BY g.genre
+ORDER BY avg(f.avg_45up) DESC limit 1) as temp";
+
+
+if (!$result = $mysqli->query($sql)) {
     // Oh no! The query failed. 
     echo "Sorry, the website is experiencing problems.";
     echo "Error: Our query failed to execute and here is why: \n";
@@ -157,6 +150,7 @@ $sql='INSERT INTO male (id,rating,votes,avg_0_18,num_0_18,avg_18_30,num_18_30,av
     echo "Error: " . $mysqli->error . "\n";
     exit;
 }
+
 // Phew, we made it. We know our MySQL connection and query 
 // succeeded, but do we have a result?
 if ($result->num_rows === 0) {
@@ -165,142 +159,229 @@ if ($result->num_rows === 0) {
     // large? 
     echo "We could not find a match for ID $aid, sorry about that. Please try again.";
     exit;
-}  
-
-//echo "---------------------";
-$sql='INSERT INTO female (id,rating,votes,avg_0_18,num_0_18,avg_18_30,num_18_30,avg_30_45,num_30_45,avg_45up,num_45up) values ("'.$id.'",0,0,0,0,0,0,0,0,0,0)';
-    //echo $sql;
-
-   
- if (!$result = $mysqli->query($sql)) {
-    // Oh no! The query failed. 
-    echo "Sorry, the website is experiencing problems.";
-    echo "Error: Our query failed to execute and here is why: \n";
-    echo "Query: " . $sql . "\n";
-    echo "Errno: " . $mysqli->errno . "\n";
-    echo "Error: " . $mysqli->error . "\n";
-    exit;
 }
-// Phew, we made it. We know our MySQL connection and query 
-// succeeded, but do we have a result?
-if ($result->num_rows === 0) {
-    // Oh, no rows! Sometimes that's expected and okay, sometimes
-    // it is not. You decide. In this case, maybe actor_id was too
-    // large? 
-    echo "We could not find a match for ID $aid, sorry about that. Please try again.";
-    exit;
-}  
-
-//echo "---------------------";
-if($age<18)
-{
-    $column_avg='avg_0_18';
-    $column_vote='num_0_18';
-}
-else if($age<30)
-{
-    $column_avg='avg_18_30';
-    $column_vote='num_18_30';
-}
-else if($age<45)
-{
-    $column_avg='avg_30_45';
-    $column_vote='num_30_45';
-}
-else 
-{
-    $column_avg='avg_45up';
-    $column_vote='num_45up';
-}
-//echo "~~~~~~~";
-//echo "column_avg:".$column_avg."\n";
-//echo "column_vote:".$column_vote."\n";
-//echo "~~~~~~~";
-$sql='UPDATE all_gender SET rating='.$rating.',votes=1,'.$column_avg.'='.$rating.','.$column_vote.'=1 where all_gender.id="'.$id.'";';
-//echo $sql;
 
 
-   
- if (!$result = $mysqli->query($sql)) {
-    // Oh no! The query failed. 
-    echo "Sorry, the website is experiencing problems.";
-    echo "Error: Our query failed to execute and here is why: \n";
-    echo "Query: " . $sql . "\n";
-    echo "Errno: " . $mysqli->errno . "\n";
-    echo "Error: " . $mysqli->error . "\n";
-    exit;
+while ($actor = $result->fetch_assoc()) {    
+ 
+    $string='45+';
+    echo '<tr><td>',$string,'</td>';
+    echo '<td>',$actor['genre'],'</td>';
+    echo '<td>',$actor['rate'],'</td>';
 }
-// Phew, we made it. We know our MySQL connection and query 
-// succeeded, but do we have a result?
-if ($result->num_rows === 0) {
-    // Oh, no rows! Sometimes that's expected and okay, sometimes
-    // it is not. You decide. In this case, maybe actor_id was too
-    // large? 
-    echo "We could not find a match for ID $aid, sorry about that. Please try again.";
-    exit;
-}  
 
-
-$sql='UPDATE '.$gender.' SET rating='.$rating.',votes=1,'.$column_avg.'='.$rating.','.$column_vote.'=1 where '.$gender.'.id="'.$id.'";';
-//echo $sql;
-
-
-   
- if (!$result = $mysqli->query($sql)) {
-    // Oh no! The query failed. 
-    echo "Sorry, the website is experiencing problems.";
-    echo "Error: Our query failed to execute and here is why: \n";
-    echo "Query: " . $sql . "\n";
-    echo "Errno: " . $mysqli->errno . "\n";
-    echo "Error: " . $mysqli->error . "\n";
-    exit;
-}
-// Phew, we made it. We know our MySQL connection and query 
-// succeeded, but do we have a result?
-if ($result->num_rows === 0) {
-    // Oh, no rows! Sometimes that's expected and okay, sometimes
-    // it is not. You decide. In this case, maybe actor_id was too
-    // large? 
-    echo "We could not find a match for ID $aid, sorry about that. Please try again.";
-    exit;
-}  
-echo "評分完成";
-}
-else
-    {
-        $action=submit;
-        $action2=hidden;
-        if($year>2020||$year<1942)
-        {
-            echo "請輸入介於1888~2020的年份<br>";
-        }
-        if($duration<=0)
-        {
-            echo "請輸入>0的影片長度<br>";
-        }
-        if($director=="")
-        {
-            echo "請輸入非空字串的導演名稱<br>";
-        }
-    }
+$result->free();
+$mysqli->close();
 ?>
-<form action="rate.php" method="post">
-<input type="<?php echo $action; ?>" value='重新評分'>
-</form>
+</tr>
+</table>
+<table border="1">
+<tr>
+<?php
+$mysqli = new mysqli('localhost', 'root', '', 'project');
 
-<form action="show_insert_result.php" method="post">
-<input type="hidden" name="id1" value="<?php echo $id; ?>">
-<input type="hidden" name="id2" value="<?php echo $id; ?>">
-<input type="hidden" name="id3" value="<?php echo $id; ?>">
-<input type="hidden" name="id4" value="<?php echo $id; ?>">
-<input type="hidden" name="id5" value="<?php echo $id; ?>">
-<input type="hidden" name="id6" value="<?php echo $id; ?>">
-<input type="hidden" name="id7" value="<?php echo $id; ?>">
-<input type="<?php echo $action2; ?>" value='顯示結果'>
-</form>
+// Oh no! A connect_errno exists so the connection attempt failed!
+if ($mysqli->connect_errno) {
+    echo "Sorry, this website is experiencing problems.";
 
+    echo "Error: Failed to make a MySQL connection, here is why: \n";
+    echo "Errno: " . $mysqli->connect_errno . "\n";
+    echo "Error: " . $mysqli->connect_error . "\n";
+    
+     exit;
+}
+
+// Perform an SQL query
+
+$sql="SELECT temp.genre, temp.rate
+from(SELECT g.genre as genre ,avg(f.avg_0_18) as rate
+from female f, genre g
+where f.id=g.id
+GROUP BY g.genre
+ORDER BY avg(f.avg_0_18) DESC limit 1) as temp";
+
+
+if (!$result = $mysqli->query($sql)) {
+    // Oh no! The query failed. 
+    echo "Sorry, the website is experiencing problems.";
+    echo "Error: Our query failed to execute and here is why: \n";
+    echo "Query: " . $sql . "\n";
+    echo "Errno: " . $mysqli->errno . "\n";
+    echo "Error: " . $mysqli->error . "\n";
+    exit;
+}
+
+// Phew, we made it. We know our MySQL connection and query 
+// succeeded, but do we have a result?
+if ($result->num_rows === 0) {
+    // Oh, no rows! Sometimes that's expected and okay, sometimes
+    // it is not. You decide. In this case, maybe actor_id was too
+    // large? 
+    echo "We could not find a match for ID $aid, sorry about that. Please try again.";
+    exit;
+}
+
+echo '<div style="font-size:1.25em;color:red">男性各年齡層評分最高的電影類型</div>';
+
+$sql="SELECT temp.genre, temp.rate
+from(SELECT g.genre as genre ,avg(f.avg_0_18) as rate
+from male f, genre g
+where f.id=g.id
+GROUP BY g.genre
+ORDER BY avg(f.avg_0_18) DESC limit 1) as temp";
+
+
+if (!$result = $mysqli->query($sql)) {
+    // Oh no! The query failed. 
+    echo "Sorry, the website is experiencing problems.";
+    echo "Error: Our query failed to execute and here is why: \n";
+    echo "Query: " . $sql . "\n";
+    echo "Errno: " . $mysqli->errno . "\n";
+    echo "Error: " . $mysqli->error . "\n";
+    exit;
+}
+
+// Phew, we made it. We know our MySQL connection and query 
+// succeeded, but do we have a result?
+if ($result->num_rows === 0) {
+    // Oh, no rows! Sometimes that's expected and okay, sometimes
+    // it is not. You decide. In this case, maybe actor_id was too
+    // large? 
+    echo "We could not find a match for ID $aid, sorry about that. Please try again.";
+    exit;
+}
+$string1=Age;
+$string2=Genre;
+$string3=Rating;
+echo '<tr><td>',$string1,'</td>';
+echo '<td>',$string2,'</td>';
+echo '<td>',$string3,'</td>';
+while ($actor = $result->fetch_assoc()) {    
+ 
+    $string='0~18';
+    echo '<tr><td>',$string,'</td>';
+    echo '<td>',$actor['genre'],'</td>';
+    echo '<td>',$actor['rate'],'</td>';
+}
+
+$sql="SELECT temp.genre, temp.rate
+from(SELECT g.genre as genre ,avg(f.avg_18_30) as rate
+from male f, genre g
+where f.id=g.id
+GROUP BY g.genre
+ORDER BY avg(f.avg_18_30) DESC limit 1) as temp";
+
+
+if (!$result = $mysqli->query($sql)) {
+    // Oh no! The query failed. 
+    echo "Sorry, the website is experiencing problems.";
+    echo "Error: Our query failed to execute and here is why: \n";
+    echo "Query: " . $sql . "\n";
+    echo "Errno: " . $mysqli->errno . "\n";
+    echo "Error: " . $mysqli->error . "\n";
+    exit;
+}
+
+// Phew, we made it. We know our MySQL connection and query 
+// succeeded, but do we have a result?
+if ($result->num_rows === 0) {
+    // Oh, no rows! Sometimes that's expected and okay, sometimes
+    // it is not. You decide. In this case, maybe actor_id was too
+    // large? 
+    echo "We could not find a match for ID $aid, sorry about that. Please try again.";
+    exit;
+}
+
+
+while ($actor = $result->fetch_assoc()) {    
+ 
+    $string='18~30';
+    echo '<tr><td>',$string,'</td>';
+    echo '<td>',$actor['genre'],'</td>';
+    echo '<td>',$actor['rate'],'</td>';
+}
+
+$sql="SELECT temp.genre, temp.rate
+from(SELECT g.genre as genre ,avg(f.avg_30_45) as rate
+from male f, genre g
+where f.id=g.id
+GROUP BY g.genre
+ORDER BY avg(f.avg_30_45) DESC limit 1) as temp";
+
+
+if (!$result = $mysqli->query($sql)) {
+    // Oh no! The query failed. 
+    echo "Sorry, the website is experiencing problems.";
+    echo "Error: Our query failed to execute and here is why: \n";
+    echo "Query: " . $sql . "\n";
+    echo "Errno: " . $mysqli->errno . "\n";
+    echo "Error: " . $mysqli->error . "\n";
+    exit;
+}
+
+// Phew, we made it. We know our MySQL connection and query 
+// succeeded, but do we have a result?
+if ($result->num_rows === 0) {
+    // Oh, no rows! Sometimes that's expected and okay, sometimes
+    // it is not. You decide. In this case, maybe actor_id was too
+    // large? 
+    echo "We could not find a match for ID $aid, sorry about that. Please try again.";
+    exit;
+}
+
+
+while ($actor = $result->fetch_assoc()) {    
+ 
+    $string='30~45';
+    echo '<tr><td>',$string,'</td>';
+    echo '<td>',$actor['genre'],'</td>';
+    echo '<td>',$actor['rate'],'</td>';
+}
+
+$sql="SELECT temp.genre, temp.rate
+from(SELECT g.genre as genre ,avg(f.avg_45up) as rate
+from male f, genre g
+where f.id=g.id
+GROUP BY g.genre
+ORDER BY avg(f.avg_45up) DESC limit 1) as temp";
+
+
+if (!$result = $mysqli->query($sql)) {
+    // Oh no! The query failed. 
+    echo "Sorry, the website is experiencing problems.";
+    echo "Error: Our query failed to execute and here is why: \n";
+    echo "Query: " . $sql . "\n";
+    echo "Errno: " . $mysqli->errno . "\n";
+    echo "Error: " . $mysqli->error . "\n";
+    exit;
+}
+
+// Phew, we made it. We know our MySQL connection and query 
+// succeeded, but do we have a result?
+if ($result->num_rows === 0) {
+    // Oh, no rows! Sometimes that's expected and okay, sometimes
+    // it is not. You decide. In this case, maybe actor_id was too
+    // large? 
+    echo "We could not find a match for ID $aid, sorry about that. Please try again.";
+    exit;
+}
+
+
+while ($actor = $result->fetch_assoc()) {    
+   $string='45+';
+    echo '<tr><td>',$string,'</td>';
+    echo '<td>',$actor['genre'],'</td>';
+    echo '<td>',$actor['rate'],'</td>';
+}
+
+$result->free();
+$mysqli->close();
+?>
+</tr>
+</table>
+<form action="query.php" method="post">
+<input type="submit" value='查看其他統計資料''>
+</form>
 <form action="info.php" method="post">
-<input type='submit'  value='回到主畫面'>
+<input type="submit" value='回到主畫面'>
 </form>
-
-

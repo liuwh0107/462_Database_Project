@@ -36,7 +36,10 @@ age:
     <pre>&nbsp</pre>
 
     <input type='hidden' name='title' value="<?php echo $title; ?>" >
-    <input type="submit" value="submit">
+    <input type="submit" value="提交"">
+</form>
+<form action="info.php" method="post">
+<input type="submit" value='回到主畫面'>
 </form>
 </body>
 </html>

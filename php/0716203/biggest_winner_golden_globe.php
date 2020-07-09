@@ -1,7 +1,7 @@
 <table border="1">
 <tr>
 <?php
-$mysqli = new mysqli('localhost', 'root', '301850', 'project');
+$mysqli = new mysqli('localhost', 'root', '', 'project');
 
 // Oh no! A connect_errno exists so the connection attempt failed!
 if ($mysqli->connect_errno) {
@@ -16,24 +16,16 @@ if ($mysqli->connect_errno) {
 
 // Perform an SQL query
 
-$sql="SELECT * from
-(SELECT table1.director,(table1.cnt+table2.cnt) as cnt from
-(SELECT d.director,count(*) as cnt from director d,
-(SELECT m.id,m.title from movie m,
-(SELECT g.film,g.year from golden_globe g where g.win='TRUE' and g.nomination='Best Director - Motion Picture')as chart1
-where m.title=chart1.film and chart1.year=m.year)as chart2
-where chart2.id=d.id
-group by director)as table1,
-
-(SELECT d.director,count(*) as cnt from director d,
-(SELECT m.id,m.title from movie m,
-(SELECT o.film,o.year from oscar o where o.win='TRUE' and o.nomination='DIRECTING' )as chart1
-where m.title=chart1.film and chart1.year=m.year)as chart2
-where chart2.id=d.id
-group by director)as table2
-where table1.director=table2.director)as temp
-order by temp.cnt desc limit 5;";
-
+$sql="SELECT temp.year, temp.film, temp.wins
+FROM (
+SELECT info.year, ANY_VALUE(info.film) as film, ANY_VALUE(info.num_of_wins) as wins
+FROM(
+    SELECT golden_globe.year, golden_globe.film, COUNT(*) as num_of_wins
+    FROM  golden_globe
+    WHERE win = 'TRUE'
+    GROUP BY golden_globe.year, golden_globe.film
+    ORDER BY  num_of_wins DESC) as info
+GROUP BY info.year) as temp";
 
 
 
@@ -57,19 +49,21 @@ if ($result->num_rows === 0) {
     exit;
 }
 
-echo '<div style="font-size:1.25em;color:red">得過最多獎項的導演</div>';
-$director=Director;
-$count='# of Awards';
-
+echo '<div style="font-size:1.25em;color:red">各年金球獎最大贏家 </div>';
+$year=Year;
+$film=Film;
+$wins='# of Awards';
 echo '<tr><td>','#','</td>';
-echo '<td>',$director,'</td>';
-echo '<td>',$count,'</td>';
+echo '<td>',$year,'</td>';
+echo '<td>',$film,'</td>';
+echo '<td>',$wins,'</td>';
 while ($actor = $result->fetch_assoc()) {    
     $rowid = $rowid + 1;
     echo '<tr><td>',$rowid,'</td>';
-    echo '<td>',$actor['director'],'</td>';
-    echo '<td>',$actor['cnt'],'</td>';
-    
+  echo '<td>',$actor['year'],'</td>';
+  echo '<td>',$actor['film'],'</td>';
+  echo '<td>',$actor['wins'],'</td>';
+
 }
 
 
@@ -79,3 +73,9 @@ $mysqli->close();
 ?>
 </tr>
 </table>
+<form action="query.php" method="post">
+<input type="submit" value='查看其他統計資料''>
+</form>
+<form action="info.php" method="post">
+<input type="submit" value='回到主畫面'>
+</form>
