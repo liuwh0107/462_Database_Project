@@ -1,7 +1,7 @@
 <table border="1">
 <tr>
 <?php
-$mysqli = new mysqli('localhost', 'root', 'password', 'project');
+$mysqli = new mysqli('localhost', 'root', '', 'project');
 
 // Oh no! A connect_errno exists so the connection attempt failed!
 if ($mysqli->connect_errno) {
@@ -79,3 +79,10 @@ $mysqli->close();
 ?>
 </tr>
 </table>
+<form action="query.php" method="post">
+<input type="submit" value='查看其他統計資料''>
+</form>
+
+<form action="info.php" method="post">
+<input type="submit" value='回到主畫面'>
+</form>
