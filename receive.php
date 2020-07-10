@@ -1,7 +1,7 @@
 <table border="1">
 <tr>
 <?php
-    $mysqli = new mysqli('localhost', 'root', '301850', 'project');
+    $mysqli = new mysqli('localhost', 'root', '', 'project');
 
 // Oh no! A connect_errno exists so the connection attempt failed!
     if ($mysqli->connect_errno) {
@@ -16,35 +16,36 @@
 
   function check($rows,$start,$end,$vote_number)
  {
+   $error='';
    //error_handling of row
    if(!is_numeric($rows) )
    {
-      if($rows!='')throw new Exception("# of Result Rows must be integer!");
+      if($rows!='')$error=$error."# of Result Rows must be integer!<br>";
    }
    else 
    {
-      if($rows <=0) throw new Exception("# of Result Rows must >0!");
+      if($rows <=0)$error=$error."# of Result Rows must >0!<br>";
    }
    
    if(!is_numeric($start) )
    {
-      if($start!='')throw new Exception("start of the year must be integer!");
+      if($start!='')$error=$error."start of the year must be integer!<br>";
    }
 
     if(!is_numeric($end) )
    {
-      if($end!='')throw new Exception("end of the year must be integer!");
+      if($end!='')$error=$error."end of the year must be integer!<br>";
    }
    
     if(!is_numeric($vote_number) )
    {
-      if($vote_number!='')throw new Exception("Minimum # of Votes must be integer!");
+      if($vote_number!='')$error=$error."Minimum # of Votes must be integer!<br>";
    }
     else 
    {
-      if($vote_number <0) throw new Exception("Minimum # of Votes can't be negative!");
+      if($vote_number <0) $error=$error."Minimum # of Votes can't be negative!<br>";
    }
-   
+   if($error!='')throw new Exception($error);
  
  return true;
  }
@@ -80,6 +81,7 @@ try
         $tem=$start;
         $start=$end;
         $end=$tem;
+        echo "Warning:start year should not be larger than end year!";
     }
 
     //echo "$country";
