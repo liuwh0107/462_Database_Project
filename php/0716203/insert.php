@@ -3,6 +3,7 @@
 <form action="receive_insert.php" method="post">
 <?php
 $title= $_POST['title'];
+$year= $_POST['year'];
 ?>
 
 country : 
@@ -230,9 +231,9 @@ age:
     </select>
     <pre>&nbsp</pre>
 
-    year :<input type="text" name="year">
-    <pre>&nbsp</pre>
+    
     <input type='hidden' name='title' value="<?php echo $title; ?>" >
+    <input type='hidden' name='year' value="<?php echo $year; ?>" >
     <input type="submit" value="提交">
 </form>
 <form action="info.php" method="post">

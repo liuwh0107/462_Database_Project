@@ -1,7 +1,7 @@
 <table border="1">
 <tr>
 <?php
- $mysqli = new mysqli('localhost', 'root', '301850', 'project');
+ $mysqli = new mysqli('localhost', 'root', '', 'project');
 $id=$_POST['id1'] ;
 
 
@@ -51,7 +51,7 @@ $mysqli->close();
 <table border="1">
 <tr>
 <?php
-$mysqli = new mysqli('localhost', 'root', '301850', 'project');
+$mysqli = new mysqli('localhost', 'root', '', 'project');
 $id=$_POST['id2'] ;
 // Oh no! A connect_errno exists so the connection attempt failed!
 if ($mysqli->connect_errno) {
@@ -107,7 +107,7 @@ $mysqli->close();
 <table border="1">
 <tr>
 <?php
-$mysqli = new mysqli('localhost', 'root', '301850', 'project');
+$mysqli = new mysqli('localhost', 'root', '', 'project');
 $id=$_POST['id3'] ;
 // Oh no! A connect_errno exists so the connection attempt failed!
 if ($mysqli->connect_errno) {
@@ -161,7 +161,7 @@ $mysqli->close();
 <table border="1">
 <tr>
 <?php
-$mysqli = new mysqli('localhost', 'root', '301850', 'project');
+$mysqli = new mysqli('localhost', 'root', '', 'project');
 $id=$_POST['id4'] ;
 // Oh no! A connect_errno exists so the connection attempt failed!
 if ($mysqli->connect_errno) {
@@ -215,7 +215,7 @@ $mysqli->close();
 <table border="1">
 <tr>
 <?php
-$mysqli = new mysqli('localhost', 'root', '301850', 'project');
+$mysqli = new mysqli('localhost', 'root', '', 'project');
 $id=$_POST['id5'] ;
 // Oh no! A connect_errno exists so the connection attempt failed!
 if ($mysqli->connect_errno) {
@@ -295,7 +295,7 @@ $mysqli->close();
 <table border="1">
 <tr>
 <?php
-$mysqli = new mysqli('localhost', 'root', '301850', 'project');
+$mysqli = new mysqli('localhost', 'root', '', 'project');
 $id=$_POST['id6'] ;
 // Oh no! A connect_errno exists so the connection attempt failed!
 if ($mysqli->connect_errno) {
@@ -376,7 +376,7 @@ $mysqli->close();
 <table border="1">
 <tr>
 <?php
-$mysqli = new mysqli('localhost', 'root', '301850', 'project');
+$mysqli = new mysqli('localhost', 'root', '', 'project');
 $id=$_POST['id7'] ;
 // Oh no! A connect_errno exists so the connection attempt failed!
 if ($mysqli->connect_errno) {

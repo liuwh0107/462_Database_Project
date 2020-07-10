@@ -3,6 +3,7 @@
 <form action="receive_old_movie.php" method="post">
 <?php
 $title= $_POST['title'];
+$year= $_POST['year'];
 ?>
  rating :
  <select name="rating">
@@ -36,7 +37,8 @@ age:
     <pre>&nbsp</pre>
 
     <input type='hidden' name='title' value="<?php echo $title; ?>" >
-    <input type="submit" value="提交"">
+    <input type='hidden' name='year' value="<?php echo $year; ?>" >
+    <input type="submit" value="提交">
 </form>
 <form action="info.php" method="post">
 <input type="submit" value='回到主畫面'>

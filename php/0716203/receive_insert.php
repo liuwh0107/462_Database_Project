@@ -11,7 +11,7 @@ $age= $_POST['age'];
 $year= $_POST['year'];
 
 
-if($year<=2020&&$year>=1888&&$duration>0&&$director!="" )
+if($duration>0&&$director!="" )
 {
     $action=hidden;
     $action2=submit;
@@ -270,10 +270,6 @@ else
     {
         $action=submit;
         $action2=hidden;
-        if($year>2020||$year<1942)
-        {
-            echo "請輸入介於1888~2020的年份<br>";
-        }
         if($duration<=0)
         {
             echo "請輸入>0的影片長度<br>";

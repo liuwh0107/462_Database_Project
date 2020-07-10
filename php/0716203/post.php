@@ -258,7 +258,7 @@ Year of Release : <input type="text" name="start">~<input type="text" name="end"
     <pre>&nbsp</pre>
 Minimum # of Votes : <input type="text" name="vote_number">(>0)
     <pre>&nbsp</pre>
-    <input type="submit" value="提交"">
+    <input type="submit" value="提交">
 </form>
 <form action="info.php" method="post">
 <input type="submit" value='回到主畫面'>

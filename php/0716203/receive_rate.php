@@ -3,16 +3,31 @@
  
     $title= $_POST['title']; 
     $year=$_POST['year'];
-    if($title=="")
+    if($title==""&&($year>2020||$year<1888))
+    {
+        echo "請輸入非空字串的電影名稱<br>";
+        echo "請輸入介於1888~2020的年份<br>";
+        $action="rate.php";
+        $button1="重新輸入";
+        $button2="回到主畫面";
+    }
+    else if($title=="")
     {
         echo "請輸入非空字串的電影名稱<br>";
         $action="rate.php";
         $button1="重新輸入";
         $button2="回到主畫面";
     }
+    else if($year>2020||$year<1888)
+    {
+        echo "請輸入介於1888~2020的年份<br>";
+        $action="rate.php";
+        $button1="重新輸入";
+        $button2="回到主畫面";
+    }
     else
     {
-        $mysqli = new mysqli('localhost', 'root', '19991016lee', 'final_project');
+        $mysqli = new mysqli('localhost', 'root', '', 'project');
 
         // Oh no! A connect_errno exists so the connection attempt failed!
             if ($mysqli->connect_errno) {
@@ -59,6 +74,7 @@
 
 <form action="<?php echo $action; ?>" method="post">
 <input type='hidden' name='title' value="<?php echo $title; ?>" >
+<input type='hidden' name='year' value="<?php echo $year; ?>" >
 <input type='submit'  value="<?php echo $button1; ?>">
 </form>
 
