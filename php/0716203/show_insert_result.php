@@ -1,7 +1,7 @@
 <table border="1">
 <tr>
 <?php
- $mysqli = new mysqli('localhost', 'root', '', 'project');
+ $mysqli = new mysqli('localhost', 'root', '301850', 'project');
 $id=$_POST['id1'] ;
 
 
@@ -33,11 +33,14 @@ echo '<div style="font-size:1.25em;color:red">Movie </div>';
 
 $id=id;
 $title=title;
+$year =year;
 echo '<tr><td>',$id,'</td>';
 echo '<td>',$title,'</td>';
+echo '<td>',$year,'</td>';
 while ($actor = $result->fetch_assoc()) {    
     echo '<tr><td>',$actor['id'],'</td>';
     echo '<td>',$actor['title'],'</td>';
+    echo '<td>',$actor['year'],'</td>';
   
 }
 $result->free();
@@ -48,7 +51,7 @@ $mysqli->close();
 <table border="1">
 <tr>
 <?php
-$mysqli = new mysqli('localhost', 'root', '', 'project');
+$mysqli = new mysqli('localhost', 'root', '301850', 'project');
 $id=$_POST['id2'] ;
 // Oh no! A connect_errno exists so the connection attempt failed!
 if ($mysqli->connect_errno) {
@@ -104,7 +107,7 @@ $mysqli->close();
 <table border="1">
 <tr>
 <?php
-$mysqli = new mysqli('localhost', 'root', '', 'project');
+$mysqli = new mysqli('localhost', 'root', '301850', 'project');
 $id=$_POST['id3'] ;
 // Oh no! A connect_errno exists so the connection attempt failed!
 if ($mysqli->connect_errno) {
@@ -158,7 +161,7 @@ $mysqli->close();
 <table border="1">
 <tr>
 <?php
-$mysqli = new mysqli('localhost', 'root', '', 'project');
+$mysqli = new mysqli('localhost', 'root', '301850', 'project');
 $id=$_POST['id4'] ;
 // Oh no! A connect_errno exists so the connection attempt failed!
 if ($mysqli->connect_errno) {
@@ -212,7 +215,7 @@ $mysqli->close();
 <table border="1">
 <tr>
 <?php
-$mysqli = new mysqli('localhost', 'root', '', 'project');
+$mysqli = new mysqli('localhost', 'root', '301850', 'project');
 $id=$_POST['id5'] ;
 // Oh no! A connect_errno exists so the connection attempt failed!
 if ($mysqli->connect_errno) {
@@ -292,7 +295,7 @@ $mysqli->close();
 <table border="1">
 <tr>
 <?php
-$mysqli = new mysqli('localhost', 'root', '', 'project');
+$mysqli = new mysqli('localhost', 'root', '301850', 'project');
 $id=$_POST['id6'] ;
 // Oh no! A connect_errno exists so the connection attempt failed!
 if ($mysqli->connect_errno) {
@@ -373,7 +376,7 @@ $mysqli->close();
 <table border="1">
 <tr>
 <?php
-$mysqli = new mysqli('localhost', 'root', '', 'project');
+$mysqli = new mysqli('localhost', 'root', '301850', 'project');
 $id=$_POST['id7'] ;
 // Oh no! A connect_errno exists so the connection attempt failed!
 if ($mysqli->connect_errno) {
