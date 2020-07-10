@@ -1,7 +1,7 @@
 <table border="1">
 <tr>
 <?php
-$mysqli = new mysqli('localhost', 'root', '19991016lee', 'final_project');
+$mysqli = new mysqli('localhost', 'root', '', 'project');
 
 // Oh no! A connect_errno exists so the connection attempt failed!
 if ($mysqli->connect_errno) {
@@ -53,7 +53,7 @@ if ($result->num_rows === 0) {
     exit;
 }
 
-echo '<div style="font-size:1.25em;color:red">Masterpiece of directors  </div>';
+echo '<div style="font-size:1.25em;color:red">導演生涯代表作品  </div>';
 $director='director';
 $rate='rate';
 $title='title';
