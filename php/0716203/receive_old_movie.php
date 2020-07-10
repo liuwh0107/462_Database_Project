@@ -14,6 +14,7 @@
 }
 
 $title = $_POST['title'];
+$year =$_POST['year'];
 $rating = $_POST['rating'];
 $gender= $_POST['gender'];
 $age= $_POST['age'];
@@ -21,7 +22,7 @@ $age= $_POST['age'];
 
 
 
-$sql_str="SELECT m.id,g.rating,g.votes, g.avg_$age ,g.num_$age FROM movie m, $gender g WHERE m.title='$title'  and m.id=g.id";
+$sql_str="SELECT m.id,g.rating,g.votes, g.avg_$age ,g.num_$age FROM movie m, $gender g WHERE m.title='$title' and m.year='$year' and m.id=g.id";
 //echo $sql_str;
 
     $sql="$sql_str";

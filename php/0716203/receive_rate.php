@@ -2,6 +2,7 @@
 
  
     $title= $_POST['title']; 
+    $year=$_POST['year'];
     if($title=="")
     {
         echo "請輸入非空字串的電影名稱<br>";
@@ -11,7 +12,7 @@
     }
     else
     {
-        $mysqli = new mysqli('localhost', 'root', '', 'project');
+        $mysqli = new mysqli('localhost', 'root', '19991016lee', 'final_project');
 
         // Oh no! A connect_errno exists so the connection attempt failed!
             if ($mysqli->connect_errno) {
@@ -23,7 +24,7 @@
             
                 exit;
         }
-        $sql_str="SELECT m.title FROM movie m WHERE m.title='$title'";
+        $sql_str="SELECT m.title, m.year FROM movie m WHERE m.title='$title'and m.year=$year";
     
         $sql="$sql_str";
         if (!$result = $mysqli->query($sql)) {
@@ -44,7 +45,7 @@
         //echo '<div style="font-size:1.25em;color:red">avg_rating_of_director(movie>30) </div>';
       
         $ans = $result->fetch_assoc();
-        echo "是否為 ".$ans['title']." 評分<br>";
+        echo "是否為年份為".$ans['year']."的".$ans['title']." 評分<br>";
         $action="rate_old_movie.php";  
         }
         $button1="我要評分";
