@@ -13,6 +13,44 @@
     
         exit;
 }
+
+  function check($rows,$start,$end,$vote_number)
+ {
+   $error='';
+   //error_handling of row
+   if(!is_numeric($rows) )
+   {
+      if($rows!='')$error=$error."顯示結果的數量必須為整數!<br>";
+   }
+   else 
+   {
+      if($rows <=0)$error=$error."顯示結果的數量必須大於零!<br>";
+   }
+   
+   if(!is_numeric($start) )
+   {
+      if($start!='')$error=$error."年份必須為整數!<br>";
+   }
+
+    if(!is_numeric($end) )
+   {
+      if($end!='')$error=$error."年份必須為整數!<br>";
+   }
+   
+    if(!is_numeric($vote_number) )
+   {
+      if($vote_number!='')$error=$error."最小投票數量必須為整數!<br>";
+   }
+    else 
+   {
+      if($vote_number <0) $error=$error."最小投票數量必須大於零!<br>";
+   }
+   if($error!='')throw new Exception($error);
+ 
+ return true;
+ }
+try
+{
     $country=$_POST['country'] ;
     $genre= $_POST['genre'];
     $rating = $_POST['rating'];
@@ -29,6 +67,22 @@
     $vote_number= $_POST['vote_number'];
     $select_in= 'm.title, m.year';
     $select_out= 'temp.title, temp.rate, temp.year';
+
+    //error handling
+    check($rows,$start,$end,$vote_number);
+    
+    $rows=intval($rows);
+    $start=intval($start);
+    $end=intval($end);
+    $vote_number=intval($vote_number);
+    if($end<$start)
+    {
+        $tem=$start;
+        $start=$end;
+        $end=$tem;
+        echo "Warning:年份範圍輸入不合理";
+    }
+
     //echo "$country";
     if($country!='select')
     {
@@ -195,7 +249,7 @@
     }
     if($start!=''&& $end!='')
     {
-        $where=$where.' m.year >'.$start.' and m.year<'.$end.' and ';
+        $where=$where.' m.year >='.$start.' and m.year<='.$end.' and ';
     }
     if($vote_number!='')
     {
@@ -409,8 +463,12 @@
     
     $result->free();
     $mysqli->close();
-
-
+}
+catch(Exception $e)
+ {
+ echo $e->getMessage();
+ }
+ 
 ?>
 </tr>
 </table>
