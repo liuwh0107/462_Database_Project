@@ -1,7 +1,7 @@
 <table border="1">
 <tr>
 <?php
-$mysqli = new mysqli('localhost', 'root', '', 'project');
+$mysqli = new mysqli('localhost', 'root', 'password', 'project');
 
 // Oh no! A connect_errno exists so the connection attempt failed!
 if ($mysqli->connect_errno) {
@@ -16,7 +16,7 @@ if ($mysqli->connect_errno) {
 
 // Perform an SQL query
 
-$sql="SELECT info.director,m.title
+$sql="SELECT info.director,m.title,info.rate
 FROM director d1,movie m,all_gender g,
 (SELECT temp.director, temp.rate
 from(SELECT d.director as director,max(rating) as rate
@@ -53,15 +53,22 @@ if ($result->num_rows === 0) {
     exit;
 }
 
-echo '<div style="font-size:1.25em;color:red">Masterpiece of directors  </div>';
-$director='director';
-$rate='title';
+echo '<div style="font-size:1.25em;color:red">導演生涯代表作(作品數量>30)  </div>';
+$director='Director';
+$rate='Rating';
+$title='Title';
 
-echo '<tr><td>',$director,'</td>';
+echo '<tr><td>','#','</td>';
+echo '<td>',$director,'</td>';
+echo '<td>',$title,'</td>';
 echo '<td>',$rate,'</td>';
 while ($actor = $result->fetch_assoc()) {    
-    echo '<tr><td>',$actor['director'],'</td>';
+    $rowid = $rowid + 1;
+    echo '<tr><td>',$rowid,'</td>';
+    echo '<td>',$actor['director'],'</td>';
     echo '<td>',$actor['title'],'</td>';
+    echo '<td>',$actor['rate'],'</td>';
+
  
 }
 
@@ -72,10 +79,3 @@ $mysqli->close();
 ?>
 </tr>
 </table>
-<form action="query.php" method="post">
-<input type="submit" value='查看其他統計資料''>
-</form>
-
-<form action="info.php" method="post">
-<input type="submit" value='回到主畫面'>
-</form>
