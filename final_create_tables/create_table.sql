@@ -144,14 +144,14 @@ into table all_gender
 fields terminated by ','
 enclosed by '"'
 lines terminated by '\r\n'
-ignore 1 rows;
+ignore 1 lines;
 
-oad data local infile './male.csv'
+load data local infile './male.csv'
 into table male
 fields terminated by ','
 enclosed by '"'
 lines terminated by '\r\n'
-ignore 1 rows;
+ignore 1 lines;
 
 load data local infile './female.csv'
 into table female
