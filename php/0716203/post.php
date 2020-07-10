@@ -1,7 +1,7 @@
 <html>
 <body>
 <form action="receive.php" method="post">
-country : 
+Country : 
 <select name="country">
      <option value="select">select</option>
 　<option value="Afghanistan">Afghanistan</option>
@@ -164,7 +164,7 @@ country :
 ...
 </select>
  <pre>&nbsp</pre>
- genre :
+ Genre :
  <select name="genre">
     <option value="select">select</option>
     <option value="Action">Action</option>
@@ -194,7 +194,7 @@ country :
     <option value="War">War</option> 
  </select>
  <pre>&nbsp</pre>
- rating :
+ Minimum Rating : 
  <select name="rating">
     <option value="select">select</option>
     <option value="0">0</option>
@@ -210,16 +210,16 @@ country :
     <option value="10">10</option>
 </select>
 <pre>&nbsp</pre>
-sort :
+Sort By : 
 <select name="sort">
     <option value="lexicographical">lexicographical</option>
     <option value="rating_low_to_high">rating_low_to_high</option>
     <option value="rating_high_to_low">rating_high_to_low</option>
 </select>
 <pre>&nbsp</pre>
-title : <input type="text" name="title">
+Title Including : <input type="text" name="title">
 <pre>&nbsp</pre>
-duration :
+Duration Range : 
 <select name="duration">
     <option value="select">select</option>
     <option value="lower_than_90">lower_than_90</option>
@@ -227,18 +227,18 @@ duration :
     <option value="higher than 150">higher_than_150</option>
 </select>
 <pre>&nbsp</pre>
-number of rows : <input type="text" name="rows">(>0)
+# of Result Rows : <input type="text" name="rows">(>0)
 <pre>&nbsp</pre>
-gender :
+Rating of Which Gender : 
 <select name="gender">
     <option value="all_gender">all</option>
     <option value="male">male</option>
     <option value="female">female</option>
     </select>
 <pre>&nbsp</pre>
-director: <input type="text" name="director">
+Director Name Including : <input type="text" name="director">
 <pre>&nbsp</pre>
-age:
+Rating of Which Age : 
 <select name="age">
     <option value="select">select</option>
     <option value="0_18">0-18</option>
@@ -247,16 +247,16 @@ age:
     <option value="45up">45up</option>
     </select>
     <pre>&nbsp</pre>
-    award:
+Award : 
     <select name="award">
     <option value="select">select</option>
     <option value="oscar">oscar</option>
     <option value="golden_globe">golden_globe</option>
     </select>
     <pre>&nbsp</pre>
-    year :<input type="text" name="start">~<input type="text" name="end">
+Year of Release : <input type="text" name="start">~<input type="text" name="end">
     <pre>&nbsp</pre>
-    vote number : <input type="text" name="vote_number">(>0)
+Minimum # of Votes : <input type="text" name="vote_number">(>0)
     <pre>&nbsp</pre>
     <input type="submit" value="提交"">
 </form>

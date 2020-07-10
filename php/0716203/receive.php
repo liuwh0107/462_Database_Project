@@ -27,8 +27,8 @@
     $start= $_POST['start'];
     $end = $_POST['end'];
     $vote_number= $_POST['vote_number'];
-    $select_in= 'm.title';
-    $select_out= 'temp.title, temp.rate';
+    $select_in= 'm.title, m.year';
+    $select_out= 'temp.title, temp.rate, temp.year';
     //echo "$country";
     if($country!='select')
     {
@@ -196,8 +196,6 @@
     if($start!=''&& $end!='')
     {
         $where=$where.' m.year >'.$start.' and m.year<'.$end.' and ';
-        $select_in=$select_in.', m.year';
-        $select_out=$select_out.', temp.year';
     }
     if($vote_number!='')
     {
@@ -371,6 +369,7 @@
         $rate=Rating;
         echo '<tr><td>','#','</td>';
         echo '<td>',$title,'</td>';
+        echo '<td>','Year','</td>';
         echo '<td>',$rate,'</td>';
         if($duration!='select')
         {
@@ -380,10 +379,6 @@
         {
             echo '<td>','Director','</td>';
         }
-        if($start!=''&& $end!='')
-        {
-            echo '<td>','Year','</td>';
-        }
         if($vote_number!='')
         {
             echo '<td>','# of Votes','</td>';
@@ -392,6 +387,7 @@
             $rowid = $rowid + 1;
             echo '<tr><td>',$rowid,'</td>';
             echo '<td>',$ans['title'],'</td>';
+            echo '<td>',$ans['year'],'</td>';
             echo '<td>',$ans['rate'],'</td>';
             if($duration!='select')
             {
@@ -400,10 +396,6 @@
             if($director!='')
             {
                 echo '<td>',$ans['director'],'</td>';
-            }
-            if($start!=''&& $end!='')
-            {
-                echo '<td>',$ans['year'],'</td>';
             }
             if($vote_number!='')
             {
