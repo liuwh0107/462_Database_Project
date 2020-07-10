@@ -2,7 +2,9 @@
 <body>
 <form action="receive_rate.php" method="post">
 
-title : <input type="text" name="title">
+Title : <input type="text" name="title">
+<pre>&nbsp</pre>
+Year : <input type="text" name="year">
 <pre>&nbsp</pre>
 <input type="submit" value="提交">
 </form>
